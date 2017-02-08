@@ -8,3 +8,13 @@ app-root {
 main {
   flex: 1 0 auto;
 }
+
+.valign-wrapper {
+  min-height:100vh;
+  justify-content: center;
+}
+
+.valign-wrapper .valign {
+  margin-top: -35px;
+  margin-left: -32px;
+}
