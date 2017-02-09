@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
+declare var jQuery: any;
 
 @Component({
   selector: 'app-navbar',
@@ -8,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
   title = 'Budget Monitoring';
 
-  constructor() { }
+  constructor(private elRef: ElementRef) { }
 
   ngOnInit() {
+    jQuery(this.elRef.nativeElement).find('.button-collapse').sideNav();
   }
 }
