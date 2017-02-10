@@ -1,9 +1,14 @@
 export class HtmlElementUtils {
-  constructor (elemNode: HTMLNode) {
+  constructor(elemNode: HTMLNode) {
     this.elemNode = elemNode;
   }
 
-  getElementTextContent (selector: string) {
-    return this.elemNode.querySelector(selector).textContent;
+  getElementNode(selector: string) {
+    return this.elemNode.querySelector(selector);
   }
+
+  getElementTextContent(selector: string) {
+    return this.getElementNode(selector).textContent;
+  }
+
 }
