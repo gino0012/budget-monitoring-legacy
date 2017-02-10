@@ -7,9 +7,9 @@ declare var jQuery: any;
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  public const TITLE = 'Budget Monitoring';
-  public const BUDGET_TAB = 'Budgets';
-  public const ADD_BUTTON = {
+  title = 'Budget Monitoring';
+  budgetTab = 'Budgets';
+  addButton = {
     nav: 'add',
     sideNav: 'Add New Budget'
   };

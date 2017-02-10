@@ -36,18 +36,18 @@ describe('NavbarComponent', () => {
   });
 
   it('should have title in brand logo', () => {
-    expect(component.TITLE).toBe(TITLE);
+    expect(component.title).toBe(TITLE);
     expect(htmlElementUtils.getElementTextContent('.brand-logo')).toBe(TITLE);
   });
 
   it('should have add button for new budget', () => {
-    expect(component.ADD_BUTTON).toEqual(ADD_BUTTON);
+    expect(component.addButton).toEqual(ADD_BUTTON);
     expect(htmlElementUtils.getElementTextContent('ul#nav-mobile .material-icons')).toBe(ADD_BUTTON.nav);
     expect(htmlElementUtils.getElementTextContent('ul.side-nav a')).toBe(ADD_BUTTON.sideNav);
   });
 
   it('should have budget tab', () => {
-    expect(component.BUDGET_TAB).toBe(BUDGET_TAB);
+    expect(component.budgetTab).toBe(BUDGET_TAB);
     expect(htmlElementUtils.getElementTextContent('div.nav-content>ul>li.tab>a')).toBe(BUDGET_TAB);
   });
 });
