@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { NavbarComponent } from './navbar.component';
-import { HtmlElementUtils } from '../utils/html-element-utils';
+import { HtmlElementUtils } from '../shared/utils/html-element-utils';
 
 describe('NavbarComponent', () => {
   const TITLE = 'Budget Monitoring';
