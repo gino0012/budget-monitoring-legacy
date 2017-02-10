@@ -12,10 +12,9 @@ describe('NavbarComponent', () => {
   const ADD_BUTTON = {
     nav: 'add',
     sideNav: 'Add New Budget'
-  }
+  };
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
-  let compiled: HTMLNode;
   let htmlElementUtils: HtmlElementUtils;
 
   beforeEach(async(() => {

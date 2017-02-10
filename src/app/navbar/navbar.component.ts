@@ -7,12 +7,12 @@ declare var jQuery: any;
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  const TITLE = 'Budget Monitoring';
-  const BUDGET_TAB = 'Budgets';
-  const ADD_BUTTON = {
+  public const TITLE = 'Budget Monitoring';
+  public const BUDGET_TAB = 'Budgets';
+  public const ADD_BUTTON = {
     nav: 'add',
     sideNav: 'Add New Budget'
-  }
+  };
 
   constructor(private elRef: ElementRef) { }
 

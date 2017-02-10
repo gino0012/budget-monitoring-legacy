@@ -21,8 +21,7 @@ describe('AppComponent', () => {
   });
 
   it('should create the app', async(() => {
-    let app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(fixture.debugElement.componentInstance).toBeTruthy();
   }));
 
   it('should have header', async(() => {
