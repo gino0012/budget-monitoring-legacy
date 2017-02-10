@@ -2,33 +2,43 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 describe('AppComponent', () => {
+  let fixture;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        NavbarComponent,
+        FooterComponent
       ],
     });
     TestBed.compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
   });
 
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
+    let app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'app works!'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Budget Monitoring App!');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should have header', async(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Budget Monitoring App!');
+    expect(compiled.querySelector('header')).not.toBeNull();
+  }));
+
+  it('should have main content', async(() => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('main')).not.toBeNull();
+  }));
+
+  it('should have footer', async(() => {
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('footer')).not.toBeNull();
   }));
 });
