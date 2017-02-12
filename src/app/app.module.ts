@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { ModalTemplateComponent } from './shared/modal/modal-template/modal-template.component';
 import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-budget.component';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-bu
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    ModalTemplateComponent,
     AddNewBudgetComponent
   ],
   imports: [
