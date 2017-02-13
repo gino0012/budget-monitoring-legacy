@@ -1,16 +1,16 @@
 declare var jQuery: any;
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, ElementRef, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
 
   constructor(private elRef: ElementRef) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     jQuery(this.elRef.nativeElement).find('.button-collapse').sideNav();
     jQuery(this.elRef.nativeElement).find('.modal').modal();
     jQuery(this.elRef.nativeElement).find('.datepicker').pickadate();
