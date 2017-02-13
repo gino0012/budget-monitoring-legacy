@@ -5,7 +5,7 @@ export class BudgetMonitoringPage {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getTitle() {
+    return element(by.css('app-root .brand-logo')).getText();
   }
 }

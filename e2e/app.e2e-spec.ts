@@ -7,8 +7,8 @@ describe('budget-monitoring App', function() {
     page = new BudgetMonitoringPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should have correct title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Budget Monitoring App!');
+    expect(page.getTitle()).toEqual('Budget Monitoring');
   });
 });
