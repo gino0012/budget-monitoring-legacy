@@ -1,5 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-declare var jQuery: any;
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -11,12 +10,11 @@ export class NavbarComponent implements OnInit {
   budgetTab = 'Budgets';
   addButton = {
     nav: 'add',
+    id: 'add-budget',
     sideNav: 'Add New Budget'
   };
 
-  constructor(private elRef: ElementRef) { }
+  constructor() { }
 
-  ngOnInit() {
-    jQuery(this.elRef.nativeElement).find('.button-collapse').sideNav();
-  }
+  ngOnInit() { }
 }

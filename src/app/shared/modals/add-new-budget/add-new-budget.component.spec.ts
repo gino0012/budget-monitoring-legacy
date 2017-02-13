@@ -30,7 +30,7 @@ describe('AddNewBudgetComponent', () => {
   });
 
   it('should have modal id', () => {
-    expect(htmlElementUtils.getElementNode('#modal1')).not.toBeNull();
+    expect(htmlElementUtils.getElementNode('#add-budget')).not.toBeNull();
   });
 
   it('should have modal content', () => {

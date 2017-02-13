@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
 
 import { NavbarComponent } from './navbar.component';
 import { HtmlElementUtils } from '../shared/utils/html-element-utils';
@@ -11,6 +10,7 @@ describe('NavbarComponent', () => {
   const BUDGET_TAB = 'Budgets';
   const ADD_BUTTON = {
     nav: 'add',
+    id: 'add-budget',
     sideNav: 'Add New Budget'
   };
   let component: NavbarComponent;
@@ -19,7 +19,10 @@ describe('NavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ]
+      declarations: [
+        NavbarComponent,
+        AddNewBudgetComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);

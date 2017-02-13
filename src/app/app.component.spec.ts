@@ -4,6 +4,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-budget.component';
 
 describe('AppComponent', () => {
   let fixture;
@@ -13,7 +14,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         NavbarComponent,
-        FooterComponent
+        FooterComponent,
+        AddNewBudgetComponent
       ],
     });
     TestBed.compileComponents();
