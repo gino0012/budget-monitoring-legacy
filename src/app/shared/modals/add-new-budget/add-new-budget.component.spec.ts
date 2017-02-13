@@ -1,15 +1,15 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { AddNewBudgetComponent } from './add-new-budget.component';
 import { HtmlElementUtils } from '../../../shared/utils/html-element-utils';
+import { Constants } from '../../../shared/constants/constants';
 
 describe('AddNewBudgetComponent', () => {
   let component: AddNewBudgetComponent;
   let fixture: ComponentFixture<AddNewBudgetComponent>;
   let htmlElementUtils: HtmlElementUtils;
+  let constants: Constants;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,6 +22,7 @@ describe('AddNewBudgetComponent', () => {
     fixture = TestBed.createComponent(AddNewBudgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    constants = new Constants();
     htmlElementUtils = new HtmlElementUtils(fixture.debugElement.nativeElement);
   });
 
@@ -30,7 +31,8 @@ describe('AddNewBudgetComponent', () => {
   });
 
   it('should have modal id', () => {
-    expect(htmlElementUtils.getElementNode('#add-budget')).not.toBeNull();
+    const addBudgetId = '#' + constants.ADD_BUDGET_ID;
+    expect(htmlElementUtils.getElementNode(addBudgetId)).not.toBeNull();
   });
 
   it('should have modal content', () => {

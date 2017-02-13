@@ -1,5 +1,5 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
 declare var jQuery: any;
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +7,6 @@ declare var jQuery: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Budget Monitoring App!';
-  addButton = {
-    id: 'add-budget'
-  };
 
   constructor(private elRef: ElementRef) { }
 

@@ -4,13 +4,14 @@ import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-b
 
 import { NavbarComponent } from './navbar.component';
 import { HtmlElementUtils } from '../shared/utils/html-element-utils';
+import { Constants } from '../shared/constants/constants';
 
 describe('NavbarComponent', () => {
   const TITLE = 'Budget Monitoring';
   const BUDGET_TAB = 'Budgets';
   const ADD_BUTTON = {
     nav: 'add',
-    id: 'add-budget',
+    id: new Constants().ADD_BUDGET_ID,
     sideNav: 'Add New Budget'
   };
   let component: NavbarComponent;
