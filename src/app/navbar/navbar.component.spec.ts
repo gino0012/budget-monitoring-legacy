@@ -1,8 +1,9 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
+import { HttpModule } from '@angular/http';
 
 import { NavbarComponent } from './navbar.component';
+import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
 import { HtmlElementUtils } from '../shared/utils/html-element-utils';
 import { Constants } from '../shared/constants/constants';
 
@@ -23,7 +24,8 @@ describe('NavbarComponent', () => {
       declarations: [
         NavbarComponent,
         AddNewBudgetComponent
-      ]
+      ],
+      imports: [HttpModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);

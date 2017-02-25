@@ -1,6 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -17,6 +18,7 @@ describe('AppComponent', () => {
         FooterComponent,
         AddNewBudgetComponent
       ],
+      imports: [HttpModule]
     });
     TestBed.compileComponents();
     fixture = TestBed.createComponent(AppComponent);
