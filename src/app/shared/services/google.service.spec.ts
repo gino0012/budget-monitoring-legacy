@@ -1,83 +1,48 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import {
-  HttpModule,
-  Http,
-  BaseRequestOptions
-  RequestMethod
-  Response,
-  ResponseOptions,
-  XHRBackend
-} from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
-
 import { GoogleService } from './google.service';
+import { GoogleApiService } from './google-api.service';
 
 describe('GoogleService', () => {
+  let getAccessTokenSpy;
+
   beforeEach(() => {
+    getAccessTokenSpy = jasmine.createSpy('get Access Token');
+    const  mockGoogleApiService = {
+      getAccessToken: getAccessTokenSpy
+    };
+
     TestBed.configureTestingModule({
-      imports: [HttpModule],
-      providers: [GoogleService, MockBackend, BaseRequestOptions,
-        { provide: XHRBackend, useClass: MockBackend },
-        {
-          provide: Http,
-          useFactory: (backend, defaultOptions) => new Http(backend, defaultOptions),
-          deps: [MockBackend, BaseRequestOptions]
-        }
+      providers: [
+        GoogleService,
+        { provide: GoogleApiService, useValue: mockGoogleApiService }
       ]
     });
   });
 
-/*
-  it('should authenticate',
-    inject([GoogleService, MockBackend], (service: GoogleService, mockBackend) => {
+  describe('authenticate(googleUser)', () => {
+    let mockGoogleUser;
 
-    const mockAccessToken = 'sample-access-token123';
-    const mockCode = 'sample-code-123';
-    const mockGoogleUser = {
-      code: mockCode
-    };
-    const expectedUrl = '/api/google/getAccessToken?code=' + mockCode;
-    let authenticateSuccessSpy = jasmine.createSpy('authenticate success spy');
-    let authenticateFailedSpy = jasmine.createSpy('authenticate failed spy');
-    mockBackend.connections.subscribe((connection) => {
-      if (connection.request.url === expectedUrl &&
-        connection.request.method === RequestMethod.Get) {
+    it('should get access token', inject([GoogleService], (service: GoogleService) => {
+      const mockGoogleCode = 'sample-google-code123';
+      mockGoogleUser = {
+        code: mockGoogleCode
+      };
 
-        connection.mockRespond(new Response(new ResponseOptions({
-          body: JSON.stringify({access_token: mockAccessToken})
-        })));
-      }
-    });
+      service.authenticate(mockGoogleUser);
 
-    service.authenticate(mockGoogleUser).subscribe(authenticateSuccessSpy, authenticateFailedSpy)
+      expect(getAccessTokenSpy).toHaveBeenCalledWith(mockGoogleCode);
+    }));
 
-    expect(authenticateSuccessSpy).toHaveBeenCalledWith(mockAccessToken);
-    expect(authenticateFailedSpy).not.toHaveBeenCalled();
-  }));
-  it('should not authenticate',
-    inject([GoogleService, MockBackend], (service: GoogleService, mockBackend) => {
+    it('should not get access token when code is null', inject([GoogleService], (service: GoogleService) => {
+      mockGoogleUser = {
+        code: null;
+      };
 
-    const mockError = {error: 'Invalid token'};
-    const mockCode = 'sample-code-123';
-    const mockGoogleUser = {code: mockCode};
-    const expectedUrl = '/api/google/getAccessToken?code=' + mockCode;
-    let authenticateSuccessSpy = jasmine.createSpy('authenticate success spy');
-    let authenticateFailedSpy = jasmine.createSpy('authenticate failed spy');
-    mockBackend.connections.subscribe((connection) => {
-      if (connection.request.url === expectedUrl &&
-        connection.request.method === RequestMethod.Get) {
+      service.authenticate(mockGoogleUser);
 
-        //connection.mockError();
-
-        connection.mockError(new Error('asd')));
-      }
-    });
-
-    service.authenticate(mockGoogleUser).subscribe(authenticateSuccessSpy, authenticateFailedSpy)
-
-    expect(authenticateSuccessSpy).not.toHaveBeenCalledWith();
-    expect(authenticateFailedSpy).toHaveBeenCalledWith(mockError);
-  }));*/
+      expect(getAccessTokenSpy).not.toHaveBeenCalled();
+    }));
+  });
 });

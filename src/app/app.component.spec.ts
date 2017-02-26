@@ -7,6 +7,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-budget.component';
 
+import { GoogleApiService } from './shared/services/google-api.service';
+
 describe('AppComponent', () => {
   let fixture;
 
@@ -18,7 +20,8 @@ describe('AppComponent', () => {
         FooterComponent,
         AddNewBudgetComponent
       ],
-      imports: [HttpModule]
+      imports: [HttpModule],
+      providers: [GoogleApiService]
     });
     TestBed.compileComponents();
     fixture = TestBed.createComponent(AppComponent);
