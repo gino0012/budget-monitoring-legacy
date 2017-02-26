@@ -5,6 +5,7 @@ import { NavbarComponent } from './navbar.component';
 import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
 
 import { GoogleApiService } from '../shared/services/google-api.service';
+import { UserDataService } from '../shared/services/user-data.service';
 import { HtmlElementUtils } from '../shared/utils/html-element-utils';
 import { Constants } from '../shared/constants/constants';
 
@@ -27,7 +28,7 @@ describe('NavbarComponent', () => {
         AddNewBudgetComponent
       ],
       imports: [HttpModule],
-      providers: [GoogleApiService]
+      providers: [GoogleApiService, UserDataService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);
