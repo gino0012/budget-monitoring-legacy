@@ -8,6 +8,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-budget.component';
 
+import { GoogleApiService } from './shared/services/google-api.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,7 @@ import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-bu
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [GoogleApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
