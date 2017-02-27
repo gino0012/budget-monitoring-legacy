@@ -53,7 +53,7 @@ describe('GoogleService', () => {
 
     it('should not get access token when code is null', inject([GoogleService], (service: GoogleService) => {
       mockGoogleUser = {
-        code: null;
+        code: null
       };
 
       service.authenticate(mockGoogleUser);

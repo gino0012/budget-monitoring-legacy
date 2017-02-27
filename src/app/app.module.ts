@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-budget.component';
 
 import { GoogleApiService } from './shared/services/google-api.service';
+import { UserDataService } from './shared/services/user-data.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { GoogleApiService } from './shared/services/google-api.service';
     FormsModule,
     HttpModule
   ],
-  providers: [GoogleApiService],
+  providers: [GoogleApiService, UserDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
