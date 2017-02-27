@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
 
@@ -11,7 +12,8 @@ export class GoogleService {
   private userData: UserDataService;
 
   constructor(private _gApi: GoogleApiService,
-    private _ud: UserDataService) {
+              private _ud: UserDataService,
+              private _router: Router) {
     this.gApi = _gApi;
     this.userData = _ud;
   }
@@ -20,6 +22,7 @@ export class GoogleService {
     if (googleUser.code) {
       this.gApi.getAccessToken(googleUser.code).subscribe(res => {
         this.userData.login(JSON.parse(res).access_token);
+        this._router.navigate(['/home']);
       });
     }
   }
