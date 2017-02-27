@@ -1,12 +1,8 @@
 import { TestBed, async } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-budget.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { GoogleApiService } from './shared/services/google-api.service';
-import { UserDataService } from './shared/services/user-data.service';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 describe('AppComponent', () => {
   let fixture;
@@ -15,12 +11,12 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        NavbarComponent,
-        FooterComponent,
-        AddNewBudgetComponent
+        LoginComponent
       ],
-      imports: [HttpModule],
-      providers: [GoogleApiService, UserDataService]
+      imports: [RouterTestingModule.withRoutes([
+        { path: 'login', component: LoginComponent },
+        { path: '',   redirectTo: '/login', pathMatch: 'full' }
+      ])]
     });
     TestBed.compileComponents();
     fixture = TestBed.createComponent(AppComponent);
@@ -28,22 +24,5 @@ describe('AppComponent', () => {
 
   it('should create the app', async(() => {
     expect(fixture.debugElement.componentInstance).toBeTruthy();
-  }));
-
-  it('should have header', async(() => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('header')).not.toBeNull();
-  }));
-
-  it('should have main content', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('main')).not.toBeNull();
-  }));
-
-  it('should have footer', async(() => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('footer')).not.toBeNull();
   }));
 });

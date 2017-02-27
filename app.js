@@ -28,9 +28,9 @@ app.use(function (req, res, next) {
 
 require('./server/routes/routes')(app);
 // Catch all other routes and return the index file
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist/index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
 /**
  * Get port from environment and store in Express.
