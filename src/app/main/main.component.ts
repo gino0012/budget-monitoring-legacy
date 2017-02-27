@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { UserDataService } from '../shared/services/user-data.service';
 
 @Component({
   selector: 'app-main',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserDataService,
+              private router: Router) { }
 
   ngOnInit() {
+    if(!this.userService.isLogin()) this.router.navigate(['/login']);
   }
 
 }
