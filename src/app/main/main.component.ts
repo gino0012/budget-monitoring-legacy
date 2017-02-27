@@ -14,7 +14,9 @@ export class MainComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    if(!this.userService.isLogin()) this.router.navigate(['/login']);
+    if (!this.userService.isLogin()) {
+      this.router.navigate(['/login']);
+    }
   }
 
 }
