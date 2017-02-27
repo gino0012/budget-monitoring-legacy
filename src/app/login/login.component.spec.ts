@@ -1,7 +1,9 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { HttpModule } from '@angular/http';
+
+import { GoogleApiService } from '../shared/services/google-api.service';
+import { UserDataService } from '../shared/services/user-data.service';
 
 import { LoginComponent } from './login.component';
 
@@ -11,7 +13,9 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
+      imports: [HttpModule],
+      declarations: [ LoginComponent ],
+      providers: [GoogleApiService, UserDataService]
     })
     .compileComponents();
   }));

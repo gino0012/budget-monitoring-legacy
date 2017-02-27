@@ -1,13 +1,10 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
 
 import { MainComponent } from './main.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
-import { GoogleApiService } from '../shared/services/google-api.service';
-import { UserDataService } from '../shared/services/user-data.service';
 
 
 describe('MainComponent', () => {
@@ -21,9 +18,7 @@ describe('MainComponent', () => {
         NavbarComponent,
         FooterComponent,
         AddNewBudgetComponent
-      ],
-      imports: [HttpModule],
-      providers: [GoogleApiService, UserDataService]
+      ]
     })
     .compileComponents();
   }));
