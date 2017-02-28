@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+declare var jQuery: any;
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserDataService } from '../shared/services/user-data.service';
@@ -8,12 +9,17 @@ import { UserDataService } from '../shared/services/user-data.service';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements AfterViewInit {
 
   constructor(private userService: UserDataService,
-              private router: Router) { }
+              private router: Router,
+              private elRef: ElementRef) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    jQuery(this.elRef.nativeElement).find('.button-collapse').sideNav();
+    jQuery(this.elRef.nativeElement).find('.modal').modal();
+    jQuery(this.elRef.nativeElement).find('.datepicker').pickadate();
+
     if (!this.userService.isLogin()) {
       this.router.navigate(['/login']);
     }
