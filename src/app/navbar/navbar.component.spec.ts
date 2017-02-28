@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
+import { Router } from '@angular/router';
 
 import { NavbarComponent } from './navbar.component';
 import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
@@ -20,15 +21,23 @@ describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let htmlElementUtils: HtmlElementUtils;
+  let logoutSpy, navigateSpy;
 
   beforeEach(async(() => {
+    logoutSpy = jasmine.createSpy('logout');
+    navigateSpy = jasmine.createSpy('navigate');
+    const mockRouter = { navigate: navigateSpy };
+    const mockUserDataService = { logout: logoutSpy};
     TestBed.configureTestingModule({
       declarations: [
         NavbarComponent,
         AddNewBudgetComponent
       ],
       imports: [HttpModule],
-      providers: [GoogleApiService, UserDataService]
+      providers: [GoogleApiService,
+        { provide: UserDataService, useValue: mockUserDataService },
+        { provide: Router, useValue: mockRouter }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);
@@ -58,5 +67,12 @@ describe('NavbarComponent', () => {
   it('should have budget tab', () => {
     expect(component.budgetTab).toBe(BUDGET_TAB);
     expect(htmlElementUtils.getElementTextContent('div.nav-content>ul>li.tab>a')).toBe(BUDGET_TAB);
+  });
+
+  it('should logout', () => {
+    component.logout();
+
+    expect(logoutSpy).toHaveBeenCalled();
+    expect(navigateSpy).toHaveBeenCalledWith(['/login']);
   });
 });

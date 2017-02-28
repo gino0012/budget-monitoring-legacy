@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import 'rxjs/add/operator/toPromise';
+import { Router } from '@angular/router';
 
 import { Constants } from '../shared/constants/constants';
+import { UserDataService } from '../shared/services/user-data.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +16,9 @@ export class NavbarComponent implements OnInit {
   budgetTab: string;
   addButton: Object;
 
-  constructor(private constants: Constants) {
+  constructor(private constants: Constants,
+              private userService: UserDataService,
+              private router: Router) {
     this.title = 'Budget Monitoring';
     this.budgetTab = 'Budgets';
     this.addButton = {
@@ -25,4 +29,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/login']);
+    location.reload();
+  }
 }
