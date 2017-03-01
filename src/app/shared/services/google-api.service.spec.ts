@@ -74,26 +74,25 @@ describe('GoogleApiService', () => {
 
     it('should check if authenticated',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
+        const mockAccessToken = 'sample-access-token123';
+        const mockResAuthToken = {
+          issued_to: 'sample-issued.apps.googleusercontent.com',
+          audience: 'sample-audience.apps.googleusercontent.com',
+          user_id: '1234567890',
+          scope: 'https://www.googleapis.com/auth/plus.me',
+          expires_in: 12345,
+          email: 'sample.email@gmail.com',
+          verified_email: true,
+          access_type: 'offline'
+        };
+        const expectedUrl = '/api/google/isAuthenticated?access_token=' + mockAccessToken;
+        httpResponseTo(mockBackend, expectedUrl, mockResAuthToken);
 
-      const mockAccessToken = 'sample-access-token123';
-      const mockResAuthToken = {
-        issued_to: "sample-issued.apps.googleusercontent.com",
-        audience: "sample-audience.apps.googleusercontent.com",
-        user_id: "1234567890",
-        scope: "https://www.googleapis.com/auth/plus.me",
-        expires_in: 12345,
-        email: "sample.email@gmail.com",
-        verified_email: true,
-        access_type: "offline"
-      };
-      const expectedUrl = '/api/google/isAuthenticated?access_token=' + mockAccessToken;
-      httpResponseTo(mockBackend, expectedUrl, mockResAuthToken);
+        service.isAuthenticated(mockAccessToken).subscribe(isAuthenticatedSuccessSpy, isAuthenticatedFailedSpy);
 
-      service.isAuthenticated(mockAccessToken).subscribe(isAuthenticatedSuccessSpy, isAuthenticatedFailedSpy);
-
-      expect(isAuthenticatedSuccessSpy).toHaveBeenCalledWith(mockResAuthToken);
-      expect(isAuthenticatedFailedSpy).not.toHaveBeenCalled();
-    }));
+        expect(isAuthenticatedSuccessSpy).toHaveBeenCalledWith(mockResAuthToken);
+        expect(isAuthenticatedFailedSpy).not.toHaveBeenCalled();
+      }));
 
     it('should check if not authenticated',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {

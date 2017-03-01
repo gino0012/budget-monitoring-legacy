@@ -9,14 +9,14 @@ import { UserDataService } from './user-data.service';
 describe('GoogleService', () => {
   const mockAccessToken = { access_token: 'sample-access-token123'};
   const mockResAuthToken = {
-    issued_to: "sample-issued.apps.googleusercontent.com",
-    audience: "sample-audience.apps.googleusercontent.com",
-    user_id: "1234567890",
-    scope: "https://www.googleapis.com/auth/plus.me",
+    issued_to: 'sample-issued.apps.googleusercontent.com',
+    audience: 'sample-audience.apps.googleusercontent.com',
+    user_id: '1234567890',
+    scope: 'https://www.googleapis.com/auth/plus.me',
     expires_in: 12345,
-    email: "sample.email@gmail.com",
+    email: 'sample.email@gmail.com',
     verified_email: true,
-    access_type: "offline"
+    access_type: 'offline'
   };
   let getAccessTokenSpy, isAuthenticatedSpy, loginSpy, navigateSpy;
 
@@ -63,14 +63,13 @@ describe('GoogleService', () => {
   describe('isAuthenticated(accessToken)', () => {
     it('should check if authenticated',
       inject([GoogleService], (service: GoogleService) => {
-
-        const mockAccessToken = 'sample-access-token123';
+        const mockAccess = 'sample-access-token123';
         const isAuthSuccessSpy = jasmine.createSpy('is authenticated success');
         const isAuthFailedSpy = jasmine.createSpy('is authenticated failed');
 
-        service.isAuthenticated(mockAccessToken).subscribe(isAuthSuccessSpy, isAuthFailedSpy);
+        service.isAuthenticated(mockAccess).subscribe(isAuthSuccessSpy, isAuthFailedSpy);
 
-        expect(isAuthenticatedSpy).toHaveBeenCalledWith(mockAccessToken);
+        expect(isAuthenticatedSpy).toHaveBeenCalledWith(mockAccess);
         expect(isAuthSuccessSpy).toHaveBeenCalledWith(true);
         expect(isAuthFailedSpy).not.toHaveBeenCalled();
       }));
@@ -114,8 +113,7 @@ describe('GoogleService', () => {
 
     if (err) {
       isAuthenticatedSpy = jasmine.createSpy('is authenticated Token').and.returnValue(Observable.throw(err));
-    }
-    else if (success) {
+    } else if (success) {
      isAuthenticatedSpy = jasmine.createSpy('is authenticated Token').and.returnValue(Observable.of(success));
     }
     navigateSpy = jasmine.createSpy('navigate');
