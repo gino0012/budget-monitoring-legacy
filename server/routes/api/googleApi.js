@@ -26,6 +26,17 @@ module.exports = function () {
     .catch(_handleErrorResponse(res));
   });
 
+  googleApi.get('/isAuthenticated', (req, res) => {
+    var options = {
+      method: 'GET',
+      uri: 'https://www.googleapis.com  /oauth2/v1/tokeninfo?access_token=' + req.query.access_token,
+    };
+
+    http.get(options)
+    .then(_handleResponse(res))
+    .catch(_handleErrorResponse(res));
+  });
+
   function _handleResponse(res) {
     return (response) => {
       res.json(response);

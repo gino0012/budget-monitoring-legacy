@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 import { GoogleApiService } from './google-api.service';
@@ -25,5 +26,13 @@ export class GoogleService {
         this._router.navigate(['/home']);
       });
     }
+  }
+
+  isAuthenticated(accessToken) {
+    if (accessToken) {
+      return this.gApi.isAuthenticated(accessToken).map(res => true)
+        .catch(err => Observable.throw(false));
+    }
+    return Observable.throw(false);
   }
 }
