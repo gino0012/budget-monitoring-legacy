@@ -20,9 +20,10 @@ export class MainComponent implements AfterViewInit {
     jQuery(this.elRef.nativeElement).find('.modal').modal();
     jQuery(this.elRef.nativeElement).find('.datepicker').pickadate();
 
-    if (!this.userService.isLogin()) {
+    this.userService.isLogin().subscribe(()=>{}, err => {
+      console.log(err);
       this.router.navigate(['/login']);
-    }
+    });
   }
 
 }

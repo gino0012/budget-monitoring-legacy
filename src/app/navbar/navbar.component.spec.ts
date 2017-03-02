@@ -68,11 +68,11 @@ describe('NavbarComponent', () => {
     expect(component.budgetTab).toBe(BUDGET_TAB);
     expect(htmlElementUtils.getElementTextContent('div.nav-content>ul>li.tab>a')).toBe(BUDGET_TAB);
   });
-/*
-  it('should logout', () => {
+
+  xit('should logout', () => {
     component.logout();
 
     expect(logoutSpy).toHaveBeenCalled();
     expect(navigateSpy).toHaveBeenCalledWith(['/login']);
-  });*/
+  });
 });

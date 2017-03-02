@@ -74,25 +74,24 @@ describe('GoogleService', () => {
         expect(isAuthFailedSpy).not.toHaveBeenCalled();
       }));
 
-    // it('should check if not authenticated when invalid access token ',
-    //   inject([GoogleService], (service: GoogleService) => {
-    //     const mockErrorAuthToken = {
-    //       error: 'error'
-    //     };
-    //     TestBed.resetTestingModule();
-    //     compileModule(mockErrorAuthToken, null);
-    //
-    //     const mockAccessToken = 'sample-INVALID-access-token123';
-    //     const isAuthSuccessSpy = jasmine.createSpy('is authenticated success');
-    //     const isAuthFailedSpy = jasmine.createSpy('is authenticated failed');
-    //
-    //     console.log('hey');
-    //     service.isAuthenticated(mockAccessToken).subscribe(isAuthSuccessSpy, isAuthFailedSpy);
-    //
-    //     expect(isAuthenticatedSpy).toHaveBeenCalledWith(mockAccessToken);
-    //     expect(isAuthSuccessSpy).not.toHaveBeenCalled();
-    //     expect(isAuthFailedSpy).toHaveBeenCalledWith(false);
-    //   }));
+    xit('should check if not authenticated when invalid access token ',
+      inject([GoogleService], (service: GoogleService) => {
+        const mockErrorAuthToken = {
+          error: 'error'
+        };
+        TestBed.resetTestingModule();
+        compileModule(mockErrorAuthToken, null);
+
+        const mockAccessToken = 'sample-INVALID-access-token123';
+        const isAuthSuccessSpy = jasmine.createSpy('is authenticated success');
+        const isAuthFailedSpy = jasmine.createSpy('is authenticated failed');
+        console.log('hey');
+        service.isAuthenticated(mockAccessToken).subscribe(isAuthSuccessSpy, isAuthFailedSpy);
+
+        expect(isAuthenticatedSpy).toHaveBeenCalledWith(mockAccessToken);
+        expect(isAuthSuccessSpy).not.toHaveBeenCalled();
+        expect(isAuthFailedSpy).toHaveBeenCalledWith(false);
+      }));
 
     it('should check if not authenticated when access token is null',
       inject([GoogleService], (service: GoogleService) => {
