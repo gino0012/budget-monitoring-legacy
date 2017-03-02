@@ -14,10 +14,9 @@ export class UserDataService {
 
   isLogin() {
     if (localStorage.getItem('access_token') !== null &&
-      localStorage.getItem('access_token') !== undefined)
-        {
-          return this.gApi.isAuthenticated(localStorage.getItem('access_token')).map(res => true);
-        }
+      localStorage.getItem('access_token') !== undefined) {
+        return this.gApi.isAuthenticated(localStorage.getItem('access_token')).map(res => true);
+      }
     return Observable.throw(false);
   }
 

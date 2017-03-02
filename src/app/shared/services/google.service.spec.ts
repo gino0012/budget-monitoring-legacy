@@ -82,7 +82,7 @@ describe('GoogleService', () => {
         TestBed.resetTestingModule();
         compileModule(mockErrorAuthToken, null);
 
-        const mockAccessToken = 'sample-INVALID-access-token123';
+        // const mockAccessToken = 'sample-INVALID-access-token123';
         const isAuthSuccessSpy = jasmine.createSpy('is authenticated success');
         const isAuthFailedSpy = jasmine.createSpy('is authenticated failed');
         console.log('hey');
