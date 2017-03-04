@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
 import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs/Rx';
+
+import { LoginComponent } from './login.component';
 
 import { GoogleApiService } from '../shared/services/google-api.service';
 import { UserDataService } from '../shared/services/user-data.service';
 
-import { LoginComponent } from './login.component';
-
-xdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let isLoginSpy, navigateSpy;
+  let mockUserDataService, mockRouter;
 
   beforeEach(async(() => {
     compileModule(false);
@@ -22,26 +22,29 @@ xdescribe('LoginComponent', () => {
   });
 
   it('should not redirect to home page if not authenticated', async(() => {
-    expect(isLoginSpy).toHaveBeenCalled();
-    expect(navigateSpy).not.toHaveBeenCalled();
+    expect(mockUserDataService.isLogin).toHaveBeenCalled();
+    expect(mockRouter.navigate).not.toHaveBeenCalled();
   }));
 
-  it('should redirect to login if not authenticated', async(() => {
+  it('should redirect to home page if authenticated', async(() => {
     TestBed.resetTestingModule();
     compileModule(true);
 
-    expect(isLoginSpy).toHaveBeenCalled();
-    expect(navigateSpy).toHaveBeenCalledWith(['/home']);
+    expect(mockUserDataService.isLogin).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
   }));
 
   function compileModule(isLogin) {
-    isLoginSpy = jasmine.createSpy('is login').and.returnValue(isLogin);
-    navigateSpy = jasmine.createSpy('navigate');
-    const mockRouter = { navigate: navigateSpy };
-    const mockUserDataService = { isLogin: isLoginSpy };
+    mockRouter = {
+      navigate: jasmine.createSpy('navigate')
+    };
+    mockUserDataService = {};
+    mockUserDataService.isLogin = jasmine.createSpy('is login').and.returnValue(Observable.of(isLogin));
+    if (!isLogin) {
+      mockUserDataService.isLogin = jasmine.createSpy('is login').and.returnValue(Observable.throw(false));
+    }
 
     TestBed.configureTestingModule({
-      imports: [HttpModule],
       declarations: [ LoginComponent ],
       providers: [GoogleApiService,
         { provide: UserDataService, useValue: mockUserDataService },

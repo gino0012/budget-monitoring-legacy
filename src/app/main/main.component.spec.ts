@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
+import { Observable } from 'rxjs/Rx';
+
 import { UserDataService } from '../shared/services/user-data.service';
 
 import { MainComponent } from './main.component';
@@ -9,10 +11,10 @@ import { FooterComponent } from '../footer/footer.component';
 import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
 
 
-xdescribe('MainComponent', () => {
+describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
-  let isLoginSpy, navigateSpy;
+  let mockUserDataService, mockRouter;
 
   beforeEach(async(() => {
     compileModule(true);
@@ -40,23 +42,27 @@ xdescribe('MainComponent', () => {
   }));
 
   it('should not redirect to login if authenticated', async(() => {
-    expect(isLoginSpy).toHaveBeenCalled();
-    expect(navigateSpy).not.toHaveBeenCalled();
+    expect(mockUserDataService.isLogin).toHaveBeenCalled();
+    expect(mockRouter.navigate).not.toHaveBeenCalled();
   }));
 
   it('should redirect to login if not authenticated', async(() => {
     TestBed.resetTestingModule();
     compileModule(false);
 
-    expect(isLoginSpy).toHaveBeenCalled();
-    expect(navigateSpy).toHaveBeenCalledWith(['/login']);
+    expect(mockUserDataService.isLogin).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
   }));
 
   function compileModule(isLogin) {
-    isLoginSpy = jasmine.createSpy('is login').and.returnValue(isLogin);
-    navigateSpy = jasmine.createSpy('navigate');
-    const mockRouter = { navigate: navigateSpy };
-    const mockUserDataService = { isLogin: isLoginSpy };
+    mockRouter = {
+      navigate: jasmine.createSpy('navigate')
+    };
+    mockUserDataService = {};
+    mockUserDataService.isLogin = jasmine.createSpy('is login').and.returnValue(Observable.of(isLogin));
+    if (!isLogin) {
+      mockUserDataService.isLogin = jasmine.createSpy('is login').and.returnValue(Observable.throw(false));
+    }
 
     TestBed.configureTestingModule({
       declarations: [
