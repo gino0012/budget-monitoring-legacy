@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { UserDataService } from './user-data.service';
-import { GoogleService } from './google.service';
+import { GoogleService } from './google/google.service';
 
 describe('UserDataService', () => {
   const mockAccessToken = {

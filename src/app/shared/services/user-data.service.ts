@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Rx';
 
-import { GoogleService } from './google.service';
+import { GoogleService } from './google/google.service';
 
 @Injectable()
 export class UserDataService {

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { LoginComponent } from './login.component';
 
-import { GoogleApiService } from '../shared/services/google-api.service';
+import { GoogleApiService } from '../shared/services/google/google-api.service';
 import { UserDataService } from '../shared/services/user-data.service';
 
 describe('LoginComponent', () => {
