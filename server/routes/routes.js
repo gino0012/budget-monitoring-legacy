@@ -1,3 +1,3 @@
-module.exports = function (app) {
-  app.use('/api', require('./api/apiRoutes')());
+module.exports = function (app, config) {
+  app.use('/api', require('./api/apiRoutes')(config));
 };

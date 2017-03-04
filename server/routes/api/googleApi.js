@@ -1,9 +1,11 @@
 var http = require('request-promise');
 var express = require('express');
 
-
-module.exports = function () {
+module.exports = function (config) {
   var googleApi = express.Router();
+
+  googleApi.use('/drive', require('./google/googleDriveApi')(config));
+  googleApi.use('/sheets', require('./google/googleSheetsApi')(config));
 
   googleApi.get('/getAccessToken', (req, res) => {
     var options = {
