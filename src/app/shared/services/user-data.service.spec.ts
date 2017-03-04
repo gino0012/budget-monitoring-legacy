@@ -43,17 +43,32 @@ describe('UserDataService', () => {
     localStorage.clear();
   });
 
-  it('should login', inject([UserDataService], (service: UserDataService) => {
-    const mockGoogleUser = {
-      code: 'sample-google-code123'
-    };
+  describe('login(googleUser)', () => {
+    let mockGoogleUser;
 
-    service.login(mockGoogleUser);
+    beforeEach(() => {
+      mockGoogleUser = {
+        code: 'sample-google-code123'
+      };
+    });
 
-    expect(mockGoogleService.authenticate).toHaveBeenCalledWith(mockGoogleUser.code);
-    expect(localStorage.getItem('access_token')).toBe(mockAccessToken.access_token);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
-  }));
+    it('should login when google code is not null', inject([UserDataService], (service: UserDataService) => {
+      service.login(mockGoogleUser);
+
+      expect(mockGoogleService.authenticate).toHaveBeenCalledWith(mockGoogleUser.code);
+      expect(localStorage.getItem('access_token')).toBe(mockAccessToken.access_token);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
+    }));
+
+    it('should login when google code is not null', inject([UserDataService], (service: UserDataService) => {
+      mockGoogleUser.code = null;
+      service.login(mockGoogleUser);
+
+      expect(mockGoogleService.authenticate).not.toHaveBeenCalled();
+      expect(localStorage.getItem('access_token')).toBe(null);
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+    }));
+  });
 
   describe('isLogin()', () => {
     let authSuccessSpy, authFailedSpy;
