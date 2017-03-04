@@ -12,7 +12,7 @@ export class UserDataService {
               private router: Router) { }
 
   login(googleUser) {
-    if(googleUser.code) {
+    if (googleUser.code) {
       this.googleService.authenticate(googleUser.code).subscribe(res => {
         localStorage.setItem('access_token', JSON.parse(res).access_token);
         this.router.navigate(['/home']);
