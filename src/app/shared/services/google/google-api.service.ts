@@ -20,4 +20,9 @@ export class GoogleApiService {
     return this.http.get('/api/google/isAuthenticated?access_token=' + accessToken)
       .map(res => res.json());
   }
+
+  getSpreadSheetIdByName(accessToken) {
+    return this.http.get('/api/google/sheets/getSpreadSheetIdByName?access_token=' + accessToken)
+      .map(res => res.json());
+  }
 }
