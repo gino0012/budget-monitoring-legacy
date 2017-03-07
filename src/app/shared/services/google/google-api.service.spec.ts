@@ -108,7 +108,8 @@ describe('GoogleApiService', () => {
     }));
   });
 
-  describe('getSpreadSheetIdByName(accessToken)', () => {
+  describe('getSpreadSheetIdByName(accessToken, fileName)', () => {
+    const mockFileName = 'file_name';
     let getSpreadSheetIdSuccessSpy, getSpreadSheetIdFailedSpy;
     beforeEach(() => {
       getSpreadSheetIdSuccessSpy = jasmine.createSpy('get spreadsheet id success');
@@ -118,27 +119,31 @@ describe('GoogleApiService', () => {
     it('should get spreadsheet id by file name',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
         const mockAccessToken = 'sample-access-token123';
-        const mockResponse = {id: "qwerty123456"};
-        const expectedUrl = '/api/google/sheets/getSpreadSheetIdByName?access_token=' + mockAccessToken;
-        httpResponseTo(mockBackend, expectedUrl, mockResponse);
+        const mockResponse = {id: 'qwerty123456'};
+        httpResponseTo(mockBackend, buildUrl(mockAccessToken, mockFileName), mockResponse);
 
-        service.getSpreadSheetIdByName(mockAccessToken).subscribe(getSpreadSheetIdSuccessSpy, getSpreadSheetIdFailedSpy);
+        service.getSpreadSheetIdByName(mockAccessToken, mockFileName).subscribe(getSpreadSheetIdSuccessSpy, getSpreadSheetIdFailedSpy);
 
         expect(getSpreadSheetIdSuccessSpy).toHaveBeenCalledWith(mockResponse);
         expect(getSpreadSheetIdFailedSpy).not.toHaveBeenCalled();
       }));
 
-    it('should get spreadsheet id by file name',
+    it('should not get spreadsheet id by file name when access token is invalid',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
         const mockInvalidAccessToken = 'sample-invalid-access-token123';
-        const expectedUrl = '/api/google/sheets/getSpreadSheetIdByName?access_token=' + mockInvalidAccessToken;
-        httpFailedResponseTo(mockBackend, expectedUrl, mockErrorResponse);
+        httpFailedResponseTo(mockBackend, buildUrl(mockInvalidAccessToken, mockFileName), mockErrorResponse);
 
-        service.getSpreadSheetIdByName(mockInvalidAccessToken).subscribe(getSpreadSheetIdSuccessSpy, getSpreadSheetIdFailedSpy);
+        service.getSpreadSheetIdByName(mockInvalidAccessToken, mockFileName)
+          .subscribe(getSpreadSheetIdSuccessSpy, getSpreadSheetIdFailedSpy);
 
         expect(getSpreadSheetIdSuccessSpy).not.toHaveBeenCalled();
         expect(getSpreadSheetIdFailedSpy).toHaveBeenCalledWith(mockErrorResponse);
       }));
+
+    function buildUrl(token, name) {
+      return '/api/google/sheets/getSpreadSheetIdByName?access_token=' + token +
+        '&file_name=' + name;
+    }
   });
 
   function httpResponseTo(mockBackend, expectedUrl, response) {

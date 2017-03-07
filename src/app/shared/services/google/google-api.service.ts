@@ -21,8 +21,8 @@ export class GoogleApiService {
       .map(res => res.json());
   }
 
-  getSpreadSheetIdByName(accessToken) {
-    return this.http.get('/api/google/sheets/getSpreadSheetIdByName?access_token=' + accessToken)
+  getSpreadSheetIdByName(accessToken, fileName) {
+    return this.http.get('/api/google/sheets/getSpreadSheetIdByName?access_token=' + accessToken + '&file_name=' + fileName)
       .map(res => res.json());
   }
 }
