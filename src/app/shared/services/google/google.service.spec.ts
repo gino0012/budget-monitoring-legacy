@@ -1,9 +1,8 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { GoogleService } from './google.service';
 import { GoogleApiService } from './google-api.service';
-import { UserDataService } from './user-data.service';
 
 describe('GoogleService', () => {
   const mockAccessToken = { access_token: 'sample-access-token123' };
