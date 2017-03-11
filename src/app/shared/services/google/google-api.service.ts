@@ -22,7 +22,12 @@ export class GoogleApiService {
   }
 
   getSpreadSheetIdByName(accessToken, fileName) {
-    return this.http.get('/api/google/sheets/getSpreadSheetIdByName?access_token=' + accessToken + '&file_name=' + fileName)
+    return this.http.get('/api/google/drive/getSpreadSheetIdByName?access_token=' + accessToken + '&file_name=' + fileName)
       .map(res => res.json());
+  }
+
+  createSpreadSheet(accessToken) {
+    return this.http.get('/api/google/sheets/createSpreadSheet?access_token=' + accessToken)
+        .map(res => res.json());
   }
 }

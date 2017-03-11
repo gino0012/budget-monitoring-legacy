@@ -11,6 +11,8 @@ import {
 import { GoogleApiService } from './google-api.service';
 
 describe('GoogleApiService', () => {
+  const mockAccessToken = 'sample-access-token123';
+  const mockInvalidAccessToken = 'sample-invalid-access-token123';
   const mockErrorResponse = {
     error: 'error',
     error_description: 'error description'
@@ -31,6 +33,7 @@ describe('GoogleApiService', () => {
 
   describe('getAccessToken(code)', () => {
     let authenticateSuccessSpy, authenticateFailedSpy;
+
     beforeEach(() => {
       authenticateSuccessSpy = jasmine.createSpy('authenticate success spy');
       authenticateFailedSpy = jasmine.createSpy('authenticate failed spy');
@@ -39,11 +42,9 @@ describe('GoogleApiService', () => {
     it('should getAccessToken',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
 
-      const mockAccessToken = 'sample-access-token123';
       const mockResAccessToken = {access_token: mockAccessToken};
       const mockCode = 'sample-code-123';
-      const expectedUrl = '/api/google/getAccessToken?code=' + mockCode;
-      httpResponseTo(mockBackend, expectedUrl, mockResAccessToken);
+      httpResponseTo(mockBackend, buildUrl(mockCode), mockResAccessToken);
 
       service.getAccessToken(mockCode).subscribe(authenticateSuccessSpy, authenticateFailedSpy);
 
@@ -53,20 +54,23 @@ describe('GoogleApiService', () => {
 
     it('should not getAccessToken when invalid code',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
+        const mockInvalidCode = 'sample-invalid-code-123';
+        httpFailedResponseTo(mockBackend, buildUrl(mockInvalidCode), mockErrorResponse);
 
-      const mockInvalidCode = 'sample-invalid-code-123';
-      const expectedUrl = '/api/google/getAccessToken?code=' + mockInvalidCode;
-      httpFailedResponseTo(mockBackend, expectedUrl, mockErrorResponse);
+        service.getAccessToken  (mockInvalidCode).subscribe(authenticateSuccessSpy, authenticateFailedSpy);
 
-      service.getAccessToken(mockInvalidCode).subscribe(authenticateSuccessSpy, authenticateFailedSpy);
-
-      expect(authenticateSuccessSpy).not.toHaveBeenCalledWith();
-      expect(authenticateFailedSpy).toHaveBeenCalledWith(mockErrorResponse);
+        expect(authenticateSuccessSpy).not.toHaveBeenCalledWith();
+        expect(authenticateFailedSpy).toHaveBeenCalledWith(mockErrorResponse);
     }));
+
+    function buildUrl(code) {
+      return '/api/google/getAccessToken?code=' + code;
+    }
   });
 
   describe('isAuthenticated(accessToken)', () => {
     let isAuthenticatedSuccessSpy, isAuthenticatedFailedSpy;
+
     beforeEach(() => {
       isAuthenticatedSuccessSpy = jasmine.createSpy('authenticate success spy');
       isAuthenticatedFailedSpy = jasmine.createSpy('authenticate failed spy');
@@ -74,7 +78,6 @@ describe('GoogleApiService', () => {
 
     it('should check if authenticated',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
-        const mockAccessToken = 'sample-access-token123';
         const mockResAuthToken = {
           issued_to: 'sample-issued.apps.googleusercontent.com',
           audience: 'sample-audience.apps.googleusercontent.com',
@@ -96,21 +99,19 @@ describe('GoogleApiService', () => {
 
     it('should check if not authenticated',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
+        const expectedUrl = '/api/google/isAuthenticated?access_token=' + mockAccessToken;
+        httpFailedResponseTo(mockBackend, expectedUrl, mockErrorResponse);
 
-      const mockAccessToken = 'sample-access-token123';
-      const expectedUrl = '/api/google/isAuthenticated?access_token=' + mockAccessToken;
-      httpFailedResponseTo(mockBackend, expectedUrl, mockErrorResponse);
+        service.isAuthenticated(mockAccessToken).subscribe(isAuthenticatedSuccessSpy, isAuthenticatedFailedSpy);
 
-      service.isAuthenticated(mockAccessToken).subscribe(isAuthenticatedSuccessSpy, isAuthenticatedFailedSpy);
-
-      expect(isAuthenticatedSuccessSpy).not.toHaveBeenCalled();
-      expect(isAuthenticatedFailedSpy).toHaveBeenCalledWith(mockErrorResponse);
-    }));
+        expect(isAuthenticatedSuccessSpy).not.toHaveBeenCalled();
+        expect(isAuthenticatedFailedSpy).toHaveBeenCalledWith(mockErrorResponse);
+      }));
   });
-
   describe('getSpreadSheetIdByName(accessToken, fileName)', () => {
     const mockFileName = 'file_name';
     let getSpreadSheetIdSuccessSpy, getSpreadSheetIdFailedSpy;
+
     beforeEach(() => {
       getSpreadSheetIdSuccessSpy = jasmine.createSpy('get spreadsheet id success');
       getSpreadSheetIdFailedSpy = jasmine.createSpy('get spreadsheet id failed');
@@ -118,7 +119,6 @@ describe('GoogleApiService', () => {
 
     it('should get spreadsheet id by file name',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
-        const mockAccessToken = 'sample-access-token123';
         const mockResponse = {id: 'qwerty123456'};
         httpResponseTo(mockBackend, buildUrl(mockAccessToken, mockFileName), mockResponse);
 
@@ -130,7 +130,6 @@ describe('GoogleApiService', () => {
 
     it('should not get spreadsheet id by file name when access token is invalid',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
-        const mockInvalidAccessToken = 'sample-invalid-access-token123';
         httpFailedResponseTo(mockBackend, buildUrl(mockInvalidAccessToken, mockFileName), mockErrorResponse);
 
         service.getSpreadSheetIdByName(mockInvalidAccessToken, mockFileName)
@@ -141,8 +140,48 @@ describe('GoogleApiService', () => {
       }));
 
     function buildUrl(token, name) {
-      return '/api/google/sheets/getSpreadSheetIdByName?access_token=' + token +
+      return '/api/google/drive/getSpreadSheetIdByName?access_token=' + token +
         '&file_name=' + name;
+    }
+  });
+
+  describe('createSpreadSheet(accessToken)', () => {
+    let createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy;
+    beforeEach(() => {
+      createSpreadSheetSuccessSpy = jasmine.createSpy('create spreadsheet success');
+      createSpreadSheetFailedSpy = jasmine.createSpy('create spreadsheet failed');
+    });
+
+    it('should create spreadsheet',
+      inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
+        let mockResponse = { "spreadsheetId": "sample-spreadsheet123tsc" };
+        httpResponseTo(mockBackend, buildUrl(mockAccessToken), mockResponse);
+
+        service.createSpreadSheet(mockAccessToken)
+            .subscribe(createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy);
+
+        expect(createSpreadSheetSuccessSpy).toHaveBeenCalledWith(mockResponse);
+        expect(createSpreadSheetFailedSpy).not.toHaveBeenCalled();
+      }));
+
+    it('should not create spreadsheet when access token is invalid',
+        inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
+          const mockErrorRes = {
+            "message": "Request had invalid authentication credentials.",
+            "domain": "global",
+            "reason": "unauthorized"
+          };
+          httpFailedResponseTo(mockBackend, buildUrl(mockInvalidAccessToken), mockErrorRes);
+
+          service.createSpreadSheet(mockInvalidAccessToken)
+              .subscribe(createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy);
+
+          expect(createSpreadSheetSuccessSpy).not.toHaveBeenCalled();
+          expect(createSpreadSheetFailedSpy).toHaveBeenCalledWith(mockErrorRes);
+        }));
+
+    function buildUrl(token) {
+      return '/api/google/sheets/createSpreadSheet?access_token=' + token;
     }
   });
 
