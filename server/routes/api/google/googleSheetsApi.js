@@ -1,4 +1,3 @@
-var http = require('request-promise');
 var express = require('express');
 var _ = require('lodash');
 var google = require('googleapis');
