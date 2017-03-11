@@ -154,7 +154,7 @@ describe('GoogleApiService', () => {
 
     it('should create spreadsheet',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
-        let mockResponse = { "spreadsheetId": "sample-spreadsheet123tsc" };
+        const mockResponse = { spreadsheetId: 'sample-spreadsheet123tsc' };
         httpResponseTo(mockBackend, buildUrl(mockAccessToken), mockResponse);
 
         service.createSpreadSheet(mockAccessToken)
@@ -167,9 +167,9 @@ describe('GoogleApiService', () => {
     it('should not create spreadsheet when access token is invalid',
         inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
           const mockErrorRes = {
-            "message": "Request had invalid authentication credentials.",
-            "domain": "global",
-            "reason": "unauthorized"
+            message: 'Request had invalid authentication credentials.',
+            domain: 'global',
+            reason: 'unauthorized'
           };
           httpFailedResponseTo(mockBackend, buildUrl(mockInvalidAccessToken), mockErrorRes);
 
