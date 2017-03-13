@@ -10,10 +10,10 @@ import { UserDataService } from '../shared/services/user-data.service';
 export class LoginComponent implements OnInit {
 
   constructor(private ngZone: NgZone,
-              private userService: UserDataService) {
-    window['onSignIn'] = (user) => ngZone.run(() => userService.login(user));
-  }
+              private userService: UserDataService) {  }
 
-  ngOnInit() { }
+  ngOnInit() {
+    window['onSignIn'] = (user) => this.ngZone.run(() => this.userService.login(user));
+  }
 
 }
