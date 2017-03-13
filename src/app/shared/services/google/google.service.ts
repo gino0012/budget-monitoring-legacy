@@ -25,4 +25,24 @@ export class GoogleService {
     }
     return Observable.throw(false);
   }
+
+  createSpreadsheet(accessToken) {
+    if (accessToken) {
+      return this.gApi.createSpreadsheet(accessToken);
+    }
+    return Observable.throw({
+      error: 'Unable to create spreadsheet',
+      error_description: 'access token is null'
+    });
+  }
+
+  getSpreadsheetIdByName(accessToken, fileName) {
+    if (accessToken && fileName) {
+      return this.gApi.getSpreadSheetIdByName(accessToken, fileName);
+    }
+    return Observable.throw({
+      error: 'Unable to get spreadsheet id',
+      error_description: 'access token or file name is null'
+    });
+  }
 }
