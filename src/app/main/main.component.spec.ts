@@ -5,19 +5,27 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
 
+import { BudgetService } from '../shared/services/budget.service';
+
 
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
+  let mockBudgetService;
 
   beforeEach(async(() => {
+    mockBudgetService = {
+      initializeDataOnStartup: jasmine.createSpy('initializeDataOnStartup')
+    };
+
     TestBed.configureTestingModule({
       declarations: [
         MainComponent,
         NavbarComponent,
         FooterComponent,
         AddNewBudgetComponent
-      ]
+      ],
+      providers: [{ provide: BudgetService, useValue: mockBudgetService }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MainComponent);
@@ -44,5 +52,9 @@ describe('MainComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('footer')).not.toBeNull();
+  }));
+
+  it('should initialize data', async(() => {
+    expect(mockBudgetService.initializeDataOnStartup).toHaveBeenCalled();
   }));
 });
