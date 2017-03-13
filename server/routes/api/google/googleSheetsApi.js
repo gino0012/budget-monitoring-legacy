@@ -13,9 +13,9 @@ module.exports = function (config) {
     config.REDIRECT_URL
   );
 
-  apiRouter.get('/createSpreadSheet', (req, res) => {
+  apiRouter.get('/createSpreadsheet', (req, res) => {
     oauth2Client.setCredentials({
-      access_token: req.query.access_token,
+      access_token: req.query.access_token
     });
 
     var request = {
@@ -36,7 +36,7 @@ module.exports = function (config) {
 
     sheets.spreadsheets.create(request, function(err, response) {
       if (err) {
-        return res.status(err.code).json(err.errors[0]);;
+        return res.status(err.code).json(err.errors[0]);
       }
       return res.json(_.pick(response, 'spreadsheetId'));
     });

@@ -145,7 +145,7 @@ describe('GoogleApiService', () => {
     }
   });
 
-  describe('createSpreadSheet(accessToken)', () => {
+  describe('createSpreadsheet(accessToken)', () => {
     let createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy;
     beforeEach(() => {
       createSpreadSheetSuccessSpy = jasmine.createSpy('create spreadsheet success');
@@ -157,7 +157,7 @@ describe('GoogleApiService', () => {
         const mockResponse = { spreadsheetId: 'sample-spreadsheet123tsc' };
         httpResponseTo(mockBackend, buildUrl(mockAccessToken), mockResponse);
 
-        service.createSpreadSheet(mockAccessToken)
+        service.createSpreadsheet(mockAccessToken)
             .subscribe(createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy);
 
         expect(createSpreadSheetSuccessSpy).toHaveBeenCalledWith(mockResponse);
@@ -173,7 +173,7 @@ describe('GoogleApiService', () => {
           };
           httpFailedResponseTo(mockBackend, buildUrl(mockInvalidAccessToken), mockErrorRes);
 
-          service.createSpreadSheet(mockInvalidAccessToken)
+          service.createSpreadsheet(mockInvalidAccessToken)
               .subscribe(createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy);
 
           expect(createSpreadSheetSuccessSpy).not.toHaveBeenCalled();
@@ -181,7 +181,7 @@ describe('GoogleApiService', () => {
         }));
 
     function buildUrl(token) {
-      return '/api/google/sheets/createSpreadSheet?access_token=' + token;
+      return '/api/google/sheets/createSpreadsheet?access_token=' + token;
     }
   });
 
