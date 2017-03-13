@@ -24,16 +24,16 @@ describe('UserDataService', () => {
 
   beforeEach(() => {
     mockGoogleService = {
-      authenticate: jasmine.createSpy('authenticate').and.returnValue(Observable.of(JSON.stringify(mockAccessToken)));
-      isAuthenticated: jasmine.createSpy('is authenticated').and.returnValue(Observable.of(mockResAuthToken));
+      authenticate: jasmine.createSpy('authenticate').and.returnValue(Observable.of(JSON.stringify(mockAccessToken))),
+      isAuthenticated: jasmine.createSpy('is authenticated').and.returnValue(Observable.of(mockResAuthToken))
     };
     mockRouter = {
-      navigate: jasmine.createSpy('navigate');
+      navigate: jasmine.createSpy('navigate')
     };
 
     TestBed.configureTestingModule({
       providers: [UserDataService,
-        { provide: GoogleService, useValue: mockGoogleService }
+        { provide: GoogleService, useValue: mockGoogleService },
         { provide: Router, useValue: mockRouter }
       ]
     });
@@ -94,6 +94,14 @@ describe('UserDataService', () => {
       expect(mockGoogleService.isAuthenticated).not.toHaveBeenCalled();
       expect(authSuccessSpy).not.toHaveBeenCalled();
       expect(authFailedSpy).toHaveBeenCalledWith(false);
+    }));
+  });
+
+  describe('getAccessToken()', () => {
+    it('should get access token', inject([UserDataService], (service: UserDataService) => {
+      localStorage.setItem('access_token', mockAccessToken.access_token);
+
+      expect(service.getAccessToken()).toBe(mockAccessToken.access_token);
     }));
   });
 });

@@ -21,10 +21,13 @@ export class UserDataService {
   }
 
   isLogin() {
-    if (localStorage.getItem('access_token') !== null &&
-      localStorage.getItem('access_token') !== undefined) {
+    if (this.getAccessToken() !== null && this.getAccessToken() !== undefined) {
         return this.googleService.isAuthenticated(localStorage.getItem('access_token')).map(res => true);
       }
     return Observable.throw(false);
+  }
+
+  getAccessToken() {
+    return localStorage.getItem('access_token');
   }
 }
