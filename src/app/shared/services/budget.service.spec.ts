@@ -54,7 +54,8 @@ describe('BudgetService', () => {
     mockGoogleService = {
       getSpreadsheetIdByName: jasmine.createSpy('getSpreadsheetIdByName').and
         .returnValue(Observable.of(getSpreadsheetIdRes)),
-      createSpreadsheet: jasmine.createSpy('createSpreadsheet')
+      createSpreadsheet: jasmine.createSpy('createSpreadsheet').and
+        .returnValue(Observable.of({}))
     };
 
     TestBed.configureTestingModule({
