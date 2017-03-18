@@ -1,35 +1,40 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainComponent } from './home.component';
+import { Observable } from 'rxjs/Observable';
+
+import { HomeComponent } from './home.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
+import { LoaderBlueComponent } from '../shared/loaders/loader-blue/loader-blue.component';
 
 import { BudgetService } from '../shared/services/budget.service';
 
-
-describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('HomeComponent', () => {
+  let component: HomeComponent;
+  let fixture: ComponentFixture<HomeComponent>;
   let mockBudgetService;
 
   beforeEach(async(() => {
     mockBudgetService = {
-      initializeDataOnStartup: jasmine.createSpy('initializeDataOnStartup')
+      initializeDataOnStartup: jasmine.createSpy('initializeDataOnStartup').and
+        .returnValue(Observable.of({}))
     };
 
     TestBed.configureTestingModule({
       declarations: [
-        MainComponent,
+        HomeComponent,
         NavbarComponent,
         FooterComponent,
-        AddNewBudgetComponent
+        AddNewBudgetComponent,
+        LoaderBlueComponent
       ],
       providers: [{ provide: BudgetService, useValue: mockBudgetService }]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
+    component.isInitializing = false;
     fixture.detectChanges();
   }));
 

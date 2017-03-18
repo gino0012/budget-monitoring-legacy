@@ -1,16 +1,24 @@
-<header>
-  <app-navbar></app-navbar>
-</header>
-<main>
-  <div id="budgets" class="col s12">
-    Budgets
+<div *ngIf="isInitializing" class="valign-wrapper">
+  <div class="valign">
+    <app-loader-blue></app-loader-blue>
   </div>
-  <div id="budgets1" class="col s12">
-    Budgets 1
-  </div>
-</main>
-<footer>
-  <app-footer></app-footer>
-</footer>
+</div>
 
-<app-add-new-budget></app-add-new-budget>
+<div [hidden]="isInitializing">
+  <header>
+    <app-navbar></app-navbar>
+  </header>
+  <main>
+    <div id="budgets" class="col s12">
+      Budgets
+    </div>
+    <div id="budgets1" class="col s12">
+      Budgets 1
+    </div>
+  </main>
+  <footer>
+    <app-footer></app-footer>
+  </footer>
+
+  <app-add-new-budget></app-add-new-budget>
+</div>

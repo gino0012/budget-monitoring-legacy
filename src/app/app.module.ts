@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
-import { MainComponent } from './home/home.component';
+import { HomeComponent } from './home/home.component';
 import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-budget.component';
 
 import { GoogleApiService } from './shared/services/google/google-api.service';
@@ -18,6 +18,7 @@ import { UserDataService } from './shared/services/user-data.service';
 import { AuthenticationResolver } from './shared/resolver/authentication-resolver.service';
 import { BudgetService } from './shared/services/budget.service';
 import { Constants } from './shared/constants/constants';
+import { LoaderBlueComponent } from './shared/loaders/loader-blue/loader-blue.component';
 
 const appRoutes: Routes = [
   {
@@ -29,7 +30,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'home',
-    component: MainComponent,
+    component: HomeComponent,
     resolve: {
       isAuthenticated: AuthenticationResolver
     }
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     FooterComponent,
     AddNewBudgetComponent,
     LoginComponent,
-    MainComponent
+    HomeComponent,
+    LoaderBlueComponent
   ],
   imports: [
     BrowserModule,
