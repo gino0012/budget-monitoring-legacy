@@ -14,8 +14,8 @@ export class BudgetService {
   initializeDataOnStartup() {
     const accessToken = this.userService.getAccessToken();
 
-    this.googleService.getSpreadsheetIdByName(accessToken, this.constants.DATA_FILE_NAME)
-      .subscribe(res => {
+    return this.googleService.getSpreadsheetIdByName(accessToken, this.constants.DATA_FILE_NAME)
+      .map(res => {
         if (!res['id']) {
           this.googleService.createSpreadsheet(accessToken).subscribe(() => {});
         }

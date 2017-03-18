@@ -10,6 +10,9 @@ import { BudgetService } from './budget.service';
 
 describe('BudgetService', () => {
   const mockAccessToken = 'sample-access-token123';
+  const mockCreateRes = {
+    spreadsheetid: '12345-qwerty'
+  };
   const mockConstants = {
     DATA_FILE_NAME: 'data-file-name'
   };
@@ -20,15 +23,22 @@ describe('BudgetService', () => {
   });
 
   describe('initializeData()', () => {
+    let initializeSuccessSpy, initializeFailedSpy;
+
+    beforeEach(() => {
+      initializeSuccessSpy = jasmine.createSpy('initializeSuccessSpy');
+      initializeFailedSpy = jasmine.createSpy('initializeFailedSpy');
+    });
+
     it('should create spreadsheet when no existing data',
       inject([BudgetService], (service: BudgetService) => {
-        service.initializeDataOnStartup();
+        service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
         expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
         expect(mockGoogleService.getSpreadsheetIdByName)
           .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
-        expect(mockGoogleService.createSpreadsheet)
-          .toHaveBeenCalledWith(mockAccessToken);
+        expect(mockGoogleService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken);
+        expect(initializeSuccessSpy).toHaveBeenCalled();
       }));
 
     xit('should not create spreadsheet when has existing data',
@@ -55,7 +65,7 @@ describe('BudgetService', () => {
       getSpreadsheetIdByName: jasmine.createSpy('getSpreadsheetIdByName').and
         .returnValue(Observable.of(getSpreadsheetIdRes)),
       createSpreadsheet: jasmine.createSpy('createSpreadsheet').and
-        .returnValue(Observable.of({}))
+        .returnValue(Observable.of(mockCreateRes))
     };
 
     TestBed.configureTestingModule({
