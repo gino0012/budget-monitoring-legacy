@@ -17,9 +17,7 @@ export class BudgetService {
     this.googleService.getSpreadsheetIdByName(accessToken, this.constants.DATA_FILE_NAME)
       .subscribe(res => {
         if (!res['id']) {
-          this.googleService.createSpreadsheet(accessToken).subscribe(res => {
-            console.log(res);
-          });
+          this.googleService.createSpreadsheet(accessToken).subscribe(() => {});
         }
       });
   }

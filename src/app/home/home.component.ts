@@ -5,8 +5,8 @@ import { BudgetService } from '../shared/services/budget.service';
 
 @Component({
   selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class MainComponent implements AfterViewInit {
 
