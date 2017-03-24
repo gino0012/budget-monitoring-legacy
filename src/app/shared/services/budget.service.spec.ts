@@ -6,32 +6,55 @@ import { Constants } from '../constants/constants';
 import { GoogleService } from './google/google.service';
 import { UserDataService } from './user-data.service';
 
+import { MockGoogleService } from '../test/mocks/mock-google-service';
+import { MockUserDataService } from '../test/mocks/mock-user-data-service';
+
 import { BudgetService } from './budget.service';
 
 describe('BudgetService', () => {
   const mockAccessToken = 'sample-access-token123';
+  const mockGetIdRes = {
+    id: 'sample-id123'
+  };
   const mockCreateRes = {
     spreadsheetid: '12345-qwerty'
   };
   const mockConstants = {
     DATA_FILE_NAME: 'data-file-name'
   };
-  let mockGoogleService, mockUserDataService;
+  let service, mockGoogleService, mockUserDataService;
 
   beforeEach(() => {
-    compileModule({});
+    TestBed.configureTestingModule({
+      providers: [BudgetService, Constants,
+        {provide: Constants, useValue: mockConstants},
+        {provide: UserDataService, useClass: MockUserDataService},
+        {provide: GoogleService, useClass: MockGoogleService}
+      ]
+    });
   });
+
+  beforeEach(inject([BudgetService, UserDataService, GoogleService],
+   (_service_, _mockUserDataService_, _mockGoogleService_) => {
+     service = _service_;
+     mockUserDataService = _mockUserDataService_;
+     mockGoogleService = _mockGoogleService_;
+
+     mockUserDataService.getAccessToken.and.returnValue(mockAccessToken);
+   }));
 
   describe('initializeData()', () => {
     let initializeSuccessSpy, initializeFailedSpy;
 
     beforeEach(() => {
-      initializeSuccessSpy = jasmine.createSpy('initializeSuccessSpy');
-      initializeFailedSpy = jasmine.createSpy('initializeFailedSpy');
+     initializeSuccessSpy = jasmine.createSpy('initializeSuccessSpy');
+     initializeFailedSpy = jasmine.createSpy('initializeFailedSpy');
     });
 
-    it('should create spreadsheet when no existing data',
-      inject([BudgetService], (service: BudgetService) => {
+    it('should create spreadsheet when no existing data', () => {
+        mockGoogleService.getSpreadsheetIdByName.and.returnValue(Observable.of({}));
+        mockGoogleService.createSpreadsheet.and.returnValue(Observable.of(mockCreateRes));
+
         service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
         expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
@@ -39,42 +62,21 @@ describe('BudgetService', () => {
           .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
         expect(mockGoogleService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken);
         expect(initializeSuccessSpy).toHaveBeenCalled();
-      }));
+        expect(initializeFailedSpy).not.toHaveBeenCalled();
+      });
 
-    xit('should not create spreadsheet when has existing data',
-      inject([BudgetService], (service: BudgetService) => {
-        TestBed.resetTestingModule();
-        compileModule({
-          id: '123456qwerty'
-        });
+    it('should not create spreadsheet when has existing data', () => {
+        mockGoogleService.getSpreadsheetIdByName.and.returnValue(Observable.of(mockGetIdRes));
 
-        service.initializeDataOnStartup();
+        service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
         expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
         expect(mockGoogleService.getSpreadsheetIdByName)
           .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
         expect(mockGoogleService.createSpreadsheet).not.toHaveBeenCalled();
-      }));
+        expect(initializeSuccessSpy).toHaveBeenCalled();
+        expect(initializeFailedSpy).not.toHaveBeenCalled();
+      });
   });
-
-  function compileModule(getSpreadsheetIdRes) {
-    mockUserDataService = {
-      getAccessToken: jasmine.createSpy('getAccessToken').and.returnValue(mockAccessToken)
-    };
-    mockGoogleService = {
-      getSpreadsheetIdByName: jasmine.createSpy('getSpreadsheetIdByName').and
-        .returnValue(Observable.of(getSpreadsheetIdRes)),
-      createSpreadsheet: jasmine.createSpy('createSpreadsheet').and
-        .returnValue(Observable.of(mockCreateRes))
-    };
-
-    TestBed.configureTestingModule({
-      providers: [BudgetService, Constants,
-        {provide: Constants, useValue: mockConstants},
-        {provide: UserDataService, useValue: mockUserDataService},
-        {provide: GoogleService, useValue: mockGoogleService}
-      ]
-    });
-  }
 });
 
