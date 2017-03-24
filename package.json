@@ -5,12 +5,15 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "npm install && ng build && node app.js",
-    "test": "ng test",
+    "start": "ng build && node app.js",
+    "test": "ng test --watch false",
+    "testw": "ng test",
+    "build": "ng lint && ng build && npm test",
+    "buildw": "ng build --watch",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
-    "e2e": "protractor",
-    "dev": "npm install && concurrently \"ng build --watch\" \"ng test\" \"nodemon app.js\"",
-    "precommit": "npm install && ng lint && ng build && ng test --watch false && concurrently \"node app.js\" \"ng e2e\""
+    "e2e": "concurrently \"node app.js\" \"ng e2e\"",
+    "dev": "concurrently \"npm run buildw\" \"npm run testw\" \"nodemon app.js\"",
+    "check": "npm run build && npm run e2e"
   },
   "private": true,
   "dependencies": {
