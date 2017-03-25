@@ -4,21 +4,14 @@
   </div>
 </div>
 
-<div [hidden]="isInitializing">
+<div *ngIf="!isInitializing">
   <header>
     <app-navbar></app-navbar>
   </header>
   <main>
-    <div id="budgets" class="col s12">
-      Budgets
-    </div>
-    <div id="budgets1" class="col s12">
-      Budgets 1
-    </div>
+    <md-tab-group>
+      <md-tab label="Tab 1">Content 1</md-tab>
+      <md-tab label="Tab 2">Content 2</md-tab>
+    </md-tab-group>
   </main>
-  <footer>
-    <app-footer></app-footer>
-  </footer>
-
-  <app-add-new-budget></app-add-new-budget>
 </div>

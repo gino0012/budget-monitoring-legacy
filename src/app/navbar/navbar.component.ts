@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialog } from '@angular/material';
 
-import { Constants } from '../shared/constants/constants';
+import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
-  providers: [Constants]
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   title: string;
-  budgetTab: string;
-  addButton: Object;
 
-  constructor(private constants: Constants) {
+  constructor(private dialog: MdDialog) {
     this.title = 'Budget Monitoring';
-    this.budgetTab = 'Budgets';
-    this.addButton = {
-      nav: 'add',
-      id: constants.ADD_BUDGET_ID,
-      sideNav: 'Add New Budget'
-    };
   }
 
   ngOnInit() { }
+
+  openDialog() {
+    this.dialog.open(AddNewBudgetComponent, {
+      height: '400px',
+      width: '600px',
+    });
+  }
 }

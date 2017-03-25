@@ -1,12 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
-app-home>div {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
+@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 
-main {
-  flex: 1 0 auto;
+body {
+  margin: 0;
 }
 
 .valign-wrapper {
@@ -15,7 +10,7 @@ main {
 }
 
 .valign-wrapper .valign {
-  margin-top: -35px;
-  margin-left: -32px;
+  //margin-top: -35px;
+  //margin-left: -32px;
   text-align: center;
 }

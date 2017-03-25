@@ -25,23 +25,5 @@ describe('AddNewBudgetComponent', () => {
     htmlElementUtils = new HtmlElementUtils(fixture.debugElement.nativeElement);
   });
 
-  it('should have modal class', () => {
-    expect(htmlElementUtils.getElementNode('.modal')).not.toBeNull();
-  });
-
-  it('should have modal id', () => {
-    const addBudgetId = '#' + constants.ADD_BUDGET_ID;
-    expect(htmlElementUtils.getElementNode(addBudgetId)).not.toBeNull();
-  });
-
-  it('should have modal content', () => {
-    expect(htmlElementUtils.getElementNode('.modal-content')).not.toBeNull();
-  });
-
-  describe('when in footer', () => {
-    it('should have close button', () => {
-      expect(htmlElementUtils.getElementTextContent('.modal-footer>a')).toBe('Close');
-    });
-
   });
 });

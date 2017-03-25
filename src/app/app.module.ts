@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
-import { MaterializeModule } from 'angular2-materialize';
+import { MaterialModule } from '@angular/material';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -47,16 +48,16 @@ const appRoutes: Routes = [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    AddNewBudgetComponent,
     LoginComponent,
     HomeComponent,
+    AddNewBudgetComponent,
     LoaderBlueComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterializeModule,
+    MaterialModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
@@ -66,6 +67,9 @@ const appRoutes: Routes = [
     GoogleApiService,
     GoogleService,
     UserDataService
+  ],
+  entryComponents: [
+    AddNewBudgetComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -1,11 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 
 import { HomeComponent } from './home.component';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { FooterComponent } from '../footer/footer.component';
-import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
 import { LoaderBlueComponent } from '../shared/loaders/loader-blue/loader-blue.component';
 
 import { BudgetService } from '../shared/services/budget.service';
@@ -22,11 +21,10 @@ describe('HomeComponent', () => {
     };
 
     TestBed.configureTestingModule({
+      imports: [MaterialModule],
       declarations: [
         HomeComponent,
         NavbarComponent,
-        FooterComponent,
-        AddNewBudgetComponent,
         LoaderBlueComponent
       ],
       providers: [{ provide: BudgetService, useValue: mockBudgetService }]
@@ -51,12 +49,6 @@ describe('HomeComponent', () => {
   it('should have main content', async(() => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('main')).not.toBeNull();
-  }));
-
-  it('should have footer', async(() => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('footer')).not.toBeNull();
   }));
 
   it('should initialize data', async(() => {

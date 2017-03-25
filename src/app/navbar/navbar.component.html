@@ -1,18 +1,6 @@
-<nav class="nav-extended">
-  <div class="nav-wrapper">
-    <a href="#" class="brand-logo">{{title}}</a>
-    <a href="#" data-activates="app-side-nav" class="button-collapse"><i class="material-icons">menu</i></a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a class="modal-trigger btn-floating btn-large waves-effect waves-light" href="#{{addButton.id}}"><i class="material-icons">{{addButton.nav}}</i></a></li>
-    </ul>
-    <ul class="side-nav" id="app-side-nav">
-      <li><a class="modal-trigger" href="#{{addButton.id}}">{{addButton.sideNav}}</a></li>
-    </ul>
-  </div>
-  <div class="nav-content">
-    <ul class="tabs tabs-transparent">
-      <li class="tab"><a href="/home#budgets">{{budgetTab}}</a></li>
-      <li class="tab"><a href="/home#budgets1">{{budgetTab}}</a></li>
-    </ul>
-  </div>
-</nav>
+<md-toolbar color="primary">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <button md-mini-fab class="add-icon" (click)="openDialog()"><md-icon>add</md-icon></button>
+</md-toolbar>
+

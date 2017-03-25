@@ -1,5 +1,4 @@
-declare var jQuery: any;
-import { Component, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { BudgetService } from '../shared/services/budget.service';
 
@@ -8,19 +7,14 @@ import { BudgetService } from '../shared/services/budget.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements OnInit {
   isInitializing: boolean;
 
-  constructor(private elRef: ElementRef,
-              private budgetService: BudgetService) {
+  constructor(private budgetService: BudgetService) {
     this.isInitializing = true;
   }
 
-  ngAfterViewInit() {
-    jQuery(this.elRef.nativeElement).find('.button-collapse').sideNav();
-    jQuery(this.elRef.nativeElement).find('.modal').modal();
-    jQuery(this.elRef.nativeElement).find('.datepicker').pickadate();
-
+  ngOnInit() {
     this.budgetService.initializeDataOnStartup().subscribe(() => {
       this.isInitializing = false;
     });
