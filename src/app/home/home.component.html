@@ -1,8 +1,4 @@
-<div *ngIf="isInitializing" class="valign-wrapper">
-  <div class="valign">
-    <app-loader-blue></app-loader-blue>
-  </div>
-</div>
+<app-loader-blue *ngIf="isInitializing"></app-loader-blue>
 
 <div *ngIf="!isInitializing">
   <header>
