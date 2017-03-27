@@ -1,4 +1,6 @@
-<md-tab-group>
+<app-loader-blue *ngIf="isInitializing"></app-loader-blue>
+
+<md-tab-group *ngIf="!isInitializing">
   <md-tab label="Tab 1">Content 1</md-tab>
   <md-tab label="Tab 2">Content 2</md-tab>
 </md-tab-group>

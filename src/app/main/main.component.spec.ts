@@ -1,16 +1,31 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '@angular/material';
 
+import { Observable } from 'rxjs/Observable';
+
+import { LoaderBlueComponent } from '../shared/loaders/loader-blue/loader-blue.component';
 import { MainComponent } from './main.component';
+
+import { BudgetService } from '../shared/services/budget.service';
 
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
+  let mockBudgetService;
 
   beforeEach(async(() => {
+    mockBudgetService = {
+      initializeDataOnStartup: jasmine.createSpy('initializeDataOnStartup').and
+        .returnValue(Observable.of({}))
+    };
+
     TestBed.configureTestingModule({
       imports: [MaterialModule],
-      declarations: [ MainComponent ]
+      declarations: [
+        MainComponent,
+        LoaderBlueComponent
+      ],
+      providers: [{ provide: BudgetService, useValue: mockBudgetService }]
     })
     .compileComponents();
   }));
@@ -24,4 +39,9 @@ describe('MainComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should initialize data', async(() => {
+    expect(mockBudgetService.initializeDataOnStartup).toHaveBeenCalled();
+    expect(component.isInitializing).toBe(false);
+  }));
 });

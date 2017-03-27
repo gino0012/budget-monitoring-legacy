@@ -34,7 +34,6 @@ describe('HomeComponent', () => {
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    component.isInitializing = false;
     fixture.detectChanges();
   }));
 
@@ -51,9 +50,5 @@ describe('HomeComponent', () => {
   it('should have main content', async(() => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('main')).not.toBeNull();
-  }));
-
-  it('should initialize data', async(() => {
-    expect(mockBudgetService.initializeDataOnStartup).toHaveBeenCalled();
   }));
 });
