@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { HomeComponent } from './home.component';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { MainComponent } from '../main/main.component';
 import { LoaderBlueComponent } from '../shared/loaders/loader-blue/loader-blue.component';
 
 import { BudgetService } from '../shared/services/budget.service';
@@ -25,6 +26,7 @@ describe('HomeComponent', () => {
       declarations: [
         HomeComponent,
         NavbarComponent,
+        MainComponent,
         LoaderBlueComponent
       ],
       providers: [{ provide: BudgetService, useValue: mockBudgetService }]

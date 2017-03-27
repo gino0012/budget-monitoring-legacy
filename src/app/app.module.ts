@@ -20,6 +20,7 @@ import { AuthenticationResolver } from './shared/resolver/authentication-resolve
 import { BudgetService } from './shared/services/budget.service';
 import { Constants } from './shared/constants/constants';
 import { LoaderBlueComponent } from './shared/loaders/loader-blue/loader-blue.component';
+import { MainComponent } from './main/main.component';
 
 const appRoutes: Routes = [
   {
@@ -51,7 +52,8 @@ const appRoutes: Routes = [
     LoginComponent,
     HomeComponent,
     AddNewBudgetComponent,
-    LoaderBlueComponent
+    LoaderBlueComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
