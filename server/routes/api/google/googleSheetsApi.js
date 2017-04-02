@@ -21,7 +21,7 @@ module.exports = function (config) {
     var request = {
       resource: {
         properties: {
-          title: config.DATA_FILE_NAME
+          title: req.query.file_name
         },
         sheets: [
           {

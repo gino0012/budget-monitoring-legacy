@@ -8,6 +8,7 @@ describe('GoogleService', () => {
   const mockAccessToken = { access_token: 'sample-access-token123' };
   const mockCreateResponse = { spreadsheetId: 'sample-spreadsheet123tsc' };
   const mockGetSpreadsheetIdResponse = {id: 'qwerty123456'};
+  const mockFileName = 'file name';
   let mockGoogleApiService;
 
   beforeEach(() => {
@@ -91,7 +92,7 @@ describe('GoogleService', () => {
       }));
   });
 
-  describe('createSpreadsheet(accessToken)', () => {
+  describe('createSpreadsheet', () => {
     let createSuccessSpy, createFailedSpy;
 
     beforeEach(() => {
@@ -101,17 +102,17 @@ describe('GoogleService', () => {
 
     it('should create spreadsheet',
       inject([GoogleService], (service: GoogleService) => {
-        service.createSpreadsheet(mockAccessToken)
+        service.createSpreadsheet(mockAccessToken, mockFileName)
           .subscribe(createSuccessSpy, createFailedSpy);
 
-        expect(mockGoogleApiService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken);
+        expect(mockGoogleApiService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken, mockFileName);
         expect(createSuccessSpy).toHaveBeenCalledWith(mockCreateResponse);
         expect(createFailedSpy).not.toHaveBeenCalled();
       }));
 
     it('should not create spreadsheet when access token is null',
       inject([GoogleService], (service: GoogleService) => {
-        service.createSpreadsheet(null)
+        service.createSpreadsheet(null, mockFileName)
           .subscribe(createSuccessSpy, createFailedSpy);
 
         expect(mockGoogleApiService.isAuthenticated).not.toHaveBeenCalled();
@@ -124,7 +125,6 @@ describe('GoogleService', () => {
   });
 
   describe('getSpreadsheetIdByName(accessToken, fileName)', () => {
-    const mockFileName = 'file name';
     const mockErrorRes = {
       error: 'Unable to get spreadsheet id',
       error_description: 'access token or file name is null'

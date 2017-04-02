@@ -13,11 +13,12 @@ export class BudgetService {
 
   initializeDataOnStartup() {
     const accessToken = this.userService.getAccessToken();
+    const fileName = this.constants.DATA_FILE_NAME;
 
-    return this.googleService.getSpreadsheetIdByName(accessToken, this.constants.DATA_FILE_NAME)
+    return this.googleService.getSpreadsheetIdByName(accessToken, fileName)
       .map(res => {
         if (!res['id']) {
-          this.googleService.createSpreadsheet(accessToken).subscribe(() => {});
+          this.googleService.createSpreadsheet(accessToken, fileName).subscribe(() => {});
         }
       });
   }

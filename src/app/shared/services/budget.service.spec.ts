@@ -43,7 +43,7 @@ describe('BudgetService', () => {
      mockUserDataService.getAccessToken.and.returnValue(mockAccessToken);
    }));
 
-  describe('initializeData()', () => {
+  describe('initializeDataOnStartup', () => {
     let initializeSuccessSpy, initializeFailedSpy;
 
     beforeEach(() => {
@@ -60,7 +60,7 @@ describe('BudgetService', () => {
         expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
         expect(mockGoogleService.getSpreadsheetIdByName)
           .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
-        expect(mockGoogleService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken);
+        expect(mockGoogleService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
         expect(initializeSuccessSpy).toHaveBeenCalled();
         expect(initializeFailedSpy).not.toHaveBeenCalled();
       });

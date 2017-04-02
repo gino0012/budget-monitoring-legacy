@@ -17,6 +17,7 @@ describe('GoogleApiService', () => {
     error: 'error',
     error_description: 'error description'
   };
+  const mockFileName = 'file_name';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -109,7 +110,6 @@ describe('GoogleApiService', () => {
       }));
   });
   describe('getSpreadSheetIdByName(accessToken, fileName)', () => {
-    const mockFileName = 'file_name';
     let getSpreadSheetIdSuccessSpy, getSpreadSheetIdFailedSpy;
 
     beforeEach(() => {
@@ -145,7 +145,7 @@ describe('GoogleApiService', () => {
     }
   });
 
-  describe('createSpreadsheet(accessToken)', () => {
+  describe('createSpreadsheet', () => {
     let createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy;
     beforeEach(() => {
       createSpreadSheetSuccessSpy = jasmine.createSpy('create spreadsheet success');
@@ -157,7 +157,7 @@ describe('GoogleApiService', () => {
         const mockResponse = { spreadsheetId: 'sample-spreadsheet123tsc' };
         httpResponseTo(mockBackend, buildUrl(mockAccessToken), mockResponse);
 
-        service.createSpreadsheet(mockAccessToken)
+        service.createSpreadsheet(mockAccessToken, mockFileName)
             .subscribe(createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy);
 
         expect(createSpreadSheetSuccessSpy).toHaveBeenCalledWith(mockResponse);
@@ -173,7 +173,7 @@ describe('GoogleApiService', () => {
           };
           httpFailedResponseTo(mockBackend, buildUrl(mockInvalidAccessToken), mockErrorRes);
 
-          service.createSpreadsheet(mockInvalidAccessToken)
+          service.createSpreadsheet(mockInvalidAccessToken, mockFileName)
               .subscribe(createSpreadSheetSuccessSpy, createSpreadSheetFailedSpy);
 
           expect(createSpreadSheetSuccessSpy).not.toHaveBeenCalled();
@@ -181,7 +181,8 @@ describe('GoogleApiService', () => {
         }));
 
     function buildUrl(token) {
-      return '/api/google/sheets/createSpreadsheet?access_token=' + token;
+      return '/api/google/sheets/createSpreadsheet?access_token=' + token +
+        '&file_name=' + mockFileName;
     }
   });
 

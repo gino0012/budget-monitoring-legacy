@@ -26,8 +26,8 @@ export class GoogleApiService {
       .map(res => res.json());
   }
 
-  createSpreadsheet(accessToken) {
-    return this.http.get('/api/google/sheets/createSpreadsheet?access_token=' + accessToken)
+  createSpreadsheet(accessToken, fileName) {
+    return this.http.get('/api/google/sheets/createSpreadsheet?access_token=' + accessToken + '&file_name=' + fileName)
         .map(res => res.json());
   }
 }

@@ -26,9 +26,9 @@ export class GoogleService {
     return Observable.throw(false);
   }
 
-  createSpreadsheet(accessToken) {
+  createSpreadsheet(accessToken, fileName) {
     if (accessToken) {
-      return this.gApi.createSpreadsheet(accessToken);
+      return this.gApi.createSpreadsheet(accessToken, fileName);
     }
     return Observable.throw({
       error: 'Unable to create spreadsheet',
