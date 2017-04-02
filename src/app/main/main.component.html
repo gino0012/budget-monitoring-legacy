@@ -1,6 +1,13 @@
-<app-loader-blue *ngIf="isInitializing"></app-loader-blue>
+<app-loader-blue class="flex-column flex-center-center flex" *ngIf="isInitializing"></app-loader-blue>
 
-<md-tab-group *ngIf="!isInitializing">
-  <md-tab label="Tab 1">Content 1</md-tab>
-  <md-tab label="Tab 2">Content 2</md-tab>
+<md-tab-group class="flex-column flex" *ngIf="!isInitializing">
+  <md-tab label="Accounts">
+    <div class="account-tab flex">
+      <button md-fab class="add-icon add-fab"><md-icon>add</md-icon></button>
+      <div class="account-content">
+        Content 1
+      </div>
+    </div>
+  </md-tab>
+  <md-tab label="Budgets">Content 2</md-tab>
 </md-tab-group>

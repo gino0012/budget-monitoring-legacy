@@ -4,16 +4,23 @@ body {
   margin: 0;
 }
 
-.valign-wrapper {
-  flex-direction: row;
-  align-items: center;
-  display: flex;
-  min-height:100vh;
-  justify-content: center;
+.full-height {
+  min-height: 100vh;
 }
 
-.valign-wrapper .valign {
+.flex-column {
   display: flex;
   flex-direction: column;
+}
+
+.flex-center-center {
+  justify-content: center;
   align-items: center;
+}
+.flex {
+  flex: 1;
+}
+
+.mat-tab-body-wrapper {
+  flex: 1;
 }
