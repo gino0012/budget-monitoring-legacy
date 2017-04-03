@@ -3,7 +3,7 @@
 <md-tab-group class="flex-column flex" *ngIf="!isInitializing">
   <md-tab label="Accounts">
     <div class="account-tab flex">
-      <button md-fab class="add-icon add-fab"><md-icon>add</md-icon></button>
+      <button md-fab class="add-icon add-fab" (click)="openDialog()"><md-icon>add</md-icon></button>
       <div class="account-content">
         Content 1
       </div>

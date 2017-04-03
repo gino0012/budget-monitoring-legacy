@@ -26,7 +26,17 @@ module.exports = function (config) {
         sheets: [
           {
             properties: {
-              title: 'Basic'
+              title: 'Transfers'
+            }
+          },
+          {
+            properties: {
+              title: 'Accounts'
+            }
+          },
+          {
+            properties: {
+              title: 'Budgets'
             }
           }
         ]

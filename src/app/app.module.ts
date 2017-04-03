@@ -21,6 +21,7 @@ import { BudgetService } from './shared/services/budget.service';
 import { Constants } from './shared/constants/constants';
 import { LoaderBlueComponent } from './shared/loaders/loader-blue/loader-blue.component';
 import { MainComponent } from './main/main.component';
+import { AddNewAccountComponent } from './shared/modals/add-new-account/add-new-account.component';
 
 const appRoutes: Routes = [
   {
@@ -53,7 +54,8 @@ const appRoutes: Routes = [
     HomeComponent,
     AddNewBudgetComponent,
     LoaderBlueComponent,
-    MainComponent
+    MainComponent,
+    AddNewAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ const appRoutes: Routes = [
     UserDataService
   ],
   entryComponents: [
-    AddNewBudgetComponent
+    AddNewBudgetComponent,
+    AddNewAccountComponent
   ],
   bootstrap: [AppComponent]
 })
