@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
-
-import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-budget.component';
 
 @Component({
   selector: 'app-navbar',
@@ -11,16 +8,9 @@ import { AddNewBudgetComponent } from '../shared/modals/add-new-budget/add-new-b
 export class NavbarComponent implements OnInit {
   title: string;
 
-  constructor(private dialog: MdDialog) {
+  constructor() {
     this.title = 'Budget Monitoring';
   }
 
   ngOnInit() { }
-
-  openDialog() {
-    this.dialog.open(AddNewBudgetComponent, {
-      height: '400px',
-      width: '600px',
-    });
-  }
 }
