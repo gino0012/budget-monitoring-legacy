@@ -22,6 +22,7 @@ import { Constants } from './shared/constants/constants';
 import { LoaderBlueComponent } from './shared/loaders/loader-blue/loader-blue.component';
 import { MainComponent } from './main/main.component';
 import { AddNewAccountComponent } from './shared/modals/add-new-account/add-new-account.component';
+import { AccountTabComponent } from './account-tab/account-tab.component';
 
 const appRoutes: Routes = [
   {
@@ -55,7 +56,8 @@ const appRoutes: Routes = [
     AddNewBudgetComponent,
     LoaderBlueComponent,
     MainComponent,
-    AddNewAccountComponent
+    AddNewAccountComponent,
+    AccountTabComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { HomeComponent } from './home.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { MainComponent } from '../main/main.component';
 import { LoaderBlueComponent } from '../shared/loaders/loader-blue/loader-blue.component';
+import { AccountTabComponent } from '../account-tab/account-tab.component';
 
 import { BudgetService } from '../shared/services/budget.service';
 
@@ -27,6 +28,7 @@ describe('HomeComponent', () => {
         HomeComponent,
         NavbarComponent,
         MainComponent,
+        AccountTabComponent,
         LoaderBlueComponent
       ],
       providers: [{ provide: BudgetService, useValue: mockBudgetService }]

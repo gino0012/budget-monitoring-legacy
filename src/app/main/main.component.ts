@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
 
 import { BudgetService } from '../shared/services/budget.service';
-import { AddNewAccountComponent } from '../shared/modals/add-new-account/add-new-account.component';
 
 @Component({
   selector: 'app-main',
@@ -12,8 +10,7 @@ import { AddNewAccountComponent } from '../shared/modals/add-new-account/add-new
 export class MainComponent implements OnInit {
   isInitializing: boolean;
 
-  constructor(private budgetService: BudgetService,
-              private dialog: MdDialog) {
+  constructor(private budgetService: BudgetService) {
     this.isInitializing = true;
   }
 
@@ -21,9 +18,5 @@ export class MainComponent implements OnInit {
     this.budgetService.initializeDataOnStartup().subscribe(() => {
       this.isInitializing = false;
     });
-  }
-
-  openDialog() {
-    this.dialog.open(AddNewAccountComponent);
   }
 }

@@ -2,12 +2,7 @@
 
 <md-tab-group class="flex-column flex" *ngIf="!isInitializing">
   <md-tab label="Accounts">
-    <div class="account-tab flex">
-      <button md-fab class="add-icon add-fab" (click)="openDialog()"><md-icon>add</md-icon></button>
-      <div class="account-content">
-        Content 1
-      </div>
-    </div>
+    <app-account-tab class="flex"></app-account-tab>
   </md-tab>
-  <md-tab label="Budgets">Content 2</md-tab>
+  <md-tab label="Budgets">Comming Soon...</md-tab>
 </md-tab-group>
