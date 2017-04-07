@@ -1,3 +1,17 @@
-<p>
-  add-new-account works!
-</p>
+<h1 md-dialog-title>New Account</h1>
+<form>
+  <md-input-container>
+    <input mdInput placeholder="Maintaining Balance">
+  </md-input-container>
+  <md-input-container>
+    <input mdInput placeholder="Initial Balance">
+  </md-input-container>
+  <md-input-container>
+    <input mdInput placeholder="Other">
+  </md-input-container>
+
+  <div md-dialog-actions>
+    <button md-button (click)="dialogRef.close('Option 1  ')">Add</button>
+    <button md-button (click)="dialogRef.close()">Close</button>
+  </div>
+</form>

@@ -24,9 +24,6 @@ export class MainComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(AddNewAccountComponent, {
-      height: '400px',
-      width: '600px',
-    });
+    this.dialog.open(AddNewAccountComponent);
   }
 }

@@ -1,7 +1,5 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { MaterialModule, MdDialogRef } from '@angular/material';
 
 import { AddNewAccountComponent } from './add-new-account.component';
 
@@ -11,7 +9,11 @@ describe('AddNewAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddNewAccountComponent ]
+      imports: [ MaterialModule ],
+      declarations: [ AddNewAccountComponent ],
+      providers: [
+        { provide: MdDialogRef, useValue: {} }
+      ]
     })
     .compileComponents();
   }));
