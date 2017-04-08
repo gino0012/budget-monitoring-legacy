@@ -68,12 +68,12 @@ module.exports = function (config) {
       auth: oauth2Client
     };
 
-     sheets.spreadsheets.values.append(request, function(err, response) {
-       if (err) {
-         return res.status(err.code || 500).json(err.errors[0]);
-       }
-       return res.json(response);
-     });
+    sheets.spreadsheets.values.append(request, function(err, response) {
+      if (err) {
+        return res.status(err.code || 500).json(err.errors[0]);
+      }
+      return res.json(response);
+    });
   });
 
   return apiRouter;
