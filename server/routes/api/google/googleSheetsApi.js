@@ -46,11 +46,34 @@ module.exports = function (config) {
 
     sheets.spreadsheets.create(request, function(err, response) {
       if (err) {
-        return res.status(err.code).json(err.errors[0]);
+        return res.status(err.code || 500).json(err.errors[0]);
       }
       return res.json(_.pick(response, 'spreadsheetId'));
     });
 
+  });
+
+  apiRouter.post('/append', (req, res) => {
+    var data = req.body;
+    oauth2Client.setCredentials({
+      access_token: data.access_token
+    });
+    var request = {
+      spreadsheetId: data.spreadsheet_id,
+      range: data.sheet_name,
+      valueInputOption: 'RAW',
+      resource: {
+         values: [data.values]
+      },
+      auth: oauth2Client
+    };
+
+     sheets.spreadsheets.values.append(request, function(err, response) {
+       if (err) {
+         return res.status(err.code || 500).json(err.errors[0]);
+       }
+       return res.json(response);
+     });
   });
 
   return apiRouter;
