@@ -45,4 +45,14 @@ export class GoogleService {
       error_description: 'access token or file name is null'
     });
   }
+
+  appendData(accessToken, spreadsheetId, sheetName, values) {
+    if (accessToken) {
+      return this.gApi.append(accessToken, spreadsheetId, sheetName, values);
+    }
+    return Observable.throw({
+      error: 'Unable to append data to workbook',
+      error_description: 'access token is null'
+    });
+  }
 }
