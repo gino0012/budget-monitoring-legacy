@@ -30,4 +30,13 @@ export class GoogleApiService {
     return this.http.get('/api/google/sheets/createSpreadsheet?access_token=' + accessToken + '&file_name=' + fileName)
         .map(res => res.json());
   }
+
+  append(accessToken, spreadsheetId, sheetName, values) {
+    return this.http.post('/api/google/sheets/append', {
+      access_token: accessToken,
+      spreadsheet_id: spreadsheetId,
+      sheet_name: sheetName,
+      values: values
+    }).map(res => res.json());
+  }
 }
