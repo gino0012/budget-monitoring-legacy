@@ -1,42 +1,60 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Request, RequestMethod, RequestOptions, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class GoogleApiService {
-  private http: Http;
 
-  constructor(private _http: Http) {
-    this.http = _http;
-  }
+  constructor(private http: Http) { }
 
   getAccessToken(code) {
-    return this.http.get('/api/google/getAccessToken?code=' + code)
+    const api = '/getAccessToken?code=' + code;
+    return this.http.request(this.createPayload(RequestMethod.Get, api, null))
       .map(res => res.json());
   }
 
   isAuthenticated(accessToken) {
-    return this.http.get('/api/google/isAuthenticated?access_token=' + accessToken)
+    const api = '/isAuthenticated?access_token=' + accessToken;
+    return this.http.request(this.createPayload(RequestMethod.Get, api, null))
       .map(res => res.json());
   }
 
   getSpreadSheetIdByName(accessToken, fileName) {
-    return this.http.get('/api/google/drive/getSpreadSheetIdByName?access_token=' + accessToken + '&file_name=' + fileName)
+    const api = '/drive/getSpreadSheetIdByName?access_token=' + accessToken + '&file_name=' + fileName;
+    return this.http.request(this.createPayload(RequestMethod.Get, api, null))
       .map(res => res.json());
   }
 
   createSpreadsheet(accessToken, fileName) {
-    return this.http.get('/api/google/sheets/createSpreadsheet?access_token=' + accessToken + '&file_name=' + fileName)
+    const api = '/sheets/createSpreadsheet?access_token=' + accessToken + '&file_name=' + fileName;
+    return this.http.request(this.createPayload(RequestMethod.Get, api, null))
         .map(res => res.json());
   }
 
   append(accessToken, spreadsheetId, sheetName, values) {
-    return this.http.post('/api/google/sheets/append', {
+    const body = {
       access_token: accessToken,
       spreadsheet_id: spreadsheetId,
       sheet_name: sheetName,
       values: values
-    }).map(res => res.json());
+    };
+    return this.http.request(this.createPayload(RequestMethod.Post, '/sheets/append', body))
+      .map(res => res.json());
+  }
+
+  private createPayload(method, api, data): Request {
+    const payload = new RequestOptions;
+    payload.method = method;
+    payload.url = '/api/google' + api;
+
+    if (method === RequestMethod.Post) {
+      payload.headers = new Headers({
+        'Content-Type': 'application/json'
+      });
+      payload.body = data;
+    }
+
+    return new Request(payload);
   }
 }
