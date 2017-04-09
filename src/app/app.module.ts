@@ -15,7 +15,7 @@ import { AddNewBudgetComponent } from './shared/modals/add-new-budget/add-new-bu
 
 import { GoogleApiService } from './shared/services/google/google-api.service';
 import { GoogleService } from './shared/services/google/google.service';
-import { UserDataService } from './shared/services/user-data.service';
+import { UserService } from './shared/services/user/user-data.service';
 import { AuthenticationResolver } from './shared/resolver/authentication-resolver.service';
 import { BudgetService } from './shared/services/budget.service';
 import { Constants } from './shared/constants/constants';
@@ -72,7 +72,7 @@ const appRoutes: Routes = [
     Constants,
     GoogleApiService,
     GoogleService,
-    UserDataService
+    UserService
   ],
   entryComponents: [
     AddNewBudgetComponent,

@@ -3,12 +3,12 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserDataService } from '../services/user-data.service';
+import { UserService } from '../services/user/user-data.service';
 
 @Injectable()
 export class AuthenticationResolver implements Resolve<Subscription> {
   constructor(private router: Router,
-              private userService: UserDataService) {}
+              private userService: UserService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Subscription {
     return this.userService.isLogin().subscribe(() => {

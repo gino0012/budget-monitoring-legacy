@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { GoogleService } from './google/google.service';
-import { UserDataService } from './user-data.service';
+import { UserService } from './user/user-data.service';
 import { Constants } from '../constants/constants';
 
 @Injectable()
 export class BudgetService {
 
   constructor(private googleService: GoogleService,
-              private userService: UserDataService,
+              private userService: UserService,
               private constants: Constants) { }
 
   initializeDataOnStartup() {

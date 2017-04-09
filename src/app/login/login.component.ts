@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 
-import { UserDataService } from '../shared/services/user-data.service';
+import { UserService } from '../shared/services/user/user-data.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +10,7 @@ import { UserDataService } from '../shared/services/user-data.service';
 export class LoginComponent implements OnInit {
 
   constructor(private ngZone: NgZone,
-              private userService: UserDataService) {  }
+              private userService: UserService) {  }
 
   ngOnInit() {
     window['onSignIn'] = (user) => this.ngZone.run(() => this.userService.login(user));

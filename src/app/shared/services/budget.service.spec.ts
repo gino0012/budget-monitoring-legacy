@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Constants } from '../constants/constants';
 import { GoogleService } from './google/google.service';
-import { UserDataService } from './user-data.service';
+import { UserService } from './user/user-data.service';
 
 import { MockGoogleService } from '../test/mocks/mock-google-service';
 import { MockUserDataService } from '../test/mocks/mock-user-data-service';
@@ -28,13 +28,13 @@ describe('BudgetService', () => {
     TestBed.configureTestingModule({
       providers: [BudgetService, Constants,
         {provide: Constants, useValue: mockConstants},
-        {provide: UserDataService, useClass: MockUserDataService},
+        {provide: UserService, useClass: MockUserDataService},
         {provide: GoogleService, useClass: MockGoogleService}
       ]
     });
   });
 
-  beforeEach(inject([BudgetService, UserDataService, GoogleService],
+  beforeEach(inject([BudgetService, UserService, GoogleService],
    (_service_, _mockUserDataService_, _mockGoogleService_) => {
      service = _service_;
      mockUserDataService = _mockUserDataService_;

@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Rx';
 
-import { UserDataService } from './user-data.service';
-import { GoogleService } from './google/google.service';
+import { UserService } from './user-data.service';
+import { GoogleService } from '../google/google.service';
 
-describe('UserDataService', () => {
+describe('UserService', () => {
   const mockAccessToken = {
     access_token: 'sample-access-token123'
   };
@@ -32,7 +32,7 @@ describe('UserDataService', () => {
     };
 
     TestBed.configureTestingModule({
-      providers: [UserDataService,
+      providers: [UserService,
         { provide: GoogleService, useValue: mockGoogleService },
         { provide: Router, useValue: mockRouter }
       ]
@@ -52,7 +52,7 @@ describe('UserDataService', () => {
       };
     });
 
-    it('should login when google code is not null', inject([UserDataService], (service: UserDataService) => {
+    it('should login when google code is not null', inject([UserService], (service: UserService) => {
       service.login(mockGoogleUser);
 
       expect(mockGoogleService.authenticate).toHaveBeenCalledWith(mockGoogleUser.code);
@@ -60,7 +60,7 @@ describe('UserDataService', () => {
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
     }));
 
-    it('should login when google code is not null', inject([UserDataService], (service: UserDataService) => {
+    it('should login when google code is not null', inject([UserService], (service: UserService) => {
       mockGoogleUser.code = null;
       service.login(mockGoogleUser);
 
@@ -78,7 +78,7 @@ describe('UserDataService', () => {
       authFailedSpy = jasmine.createSpy('auth failed');
     });
 
-    it('should check if already login', inject([UserDataService], (service: UserDataService) => {
+    it('should check if already login', inject([UserService], (service: UserService) => {
       localStorage.setItem('access_token', mockAccessToken.access_token);
 
       service.isLogin().subscribe(authSuccessSpy, authFailedSpy);
@@ -88,7 +88,7 @@ describe('UserDataService', () => {
       expect(authFailedSpy).not.toHaveBeenCalled();
     }));
 
-    it('should check if not login when no saved access token', inject([UserDataService], (service: UserDataService) => {
+    it('should check if not login when no saved access token', inject([UserService], (service: UserService) => {
       service.isLogin().subscribe(authSuccessSpy, authFailedSpy);
 
       expect(mockGoogleService.isAuthenticated).not.toHaveBeenCalled();
@@ -98,7 +98,7 @@ describe('UserDataService', () => {
   });
 
   describe('getAccessToken()', () => {
-    it('should get access token', inject([UserDataService], (service: UserDataService) => {
+    it('should get access token', inject([UserService], (service: UserService) => {
       localStorage.setItem('access_token', mockAccessToken.access_token);
 
       expect(service.getAccessToken()).toBe(mockAccessToken.access_token);
