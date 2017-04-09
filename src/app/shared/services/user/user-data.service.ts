@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserDataInterface } from '../../interfaces/user-data-interface';
 
 @Injectable()
-export class UserDataService implements UserDataInterface{
+export class UserDataService implements UserDataInterface {
   private KEY = {
     'ACCESS_TOKEN': 'access_token'
   };
