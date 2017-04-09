@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import { GoogleApiService } from './google-api.service';
+import { GoogleInterface } from '../../interfaces/google-interface';
 
 @Injectable()
-export class GoogleService {
+export class GoogleService implements GoogleInterface{
 
   constructor(private gApi: GoogleApiService) { }
 
-  authenticate(googleCode) {
+  authenticate(googleCode: string): Observable<any> {
     if (googleCode) {
       return this.gApi.getAccessToken(googleCode);
     }
@@ -19,14 +20,14 @@ export class GoogleService {
     });
   }
 
-  isAuthenticated(accessToken) {
+  isAuthenticated(accessToken: string): Observable<boolean> {
     if (accessToken) {
       return this.gApi.isAuthenticated(accessToken);
     }
     return Observable.throw(false);
   }
 
-  createSpreadsheet(accessToken, fileName) {
+  createSpreadsheet(accessToken: string, fileName: string): Observable<any> {
     if (accessToken) {
       return this.gApi.createSpreadsheet(accessToken, fileName);
     }
@@ -36,7 +37,7 @@ export class GoogleService {
     });
   }
 
-  getSpreadsheetIdByName(accessToken, fileName) {
+  getSpreadsheetIdByName(accessToken: string, fileName: string): Observable<any> {
     if (accessToken && fileName) {
       return this.gApi.getSpreadSheetIdByName(accessToken, fileName);
     }
@@ -46,7 +47,7 @@ export class GoogleService {
     });
   }
 
-  appendData(accessToken, spreadsheetId, sheetName, values) {
+  appendData(accessToken: string, spreadsheetId: string, sheetName: string, values: Array<any>): Observable<any> {
     if (accessToken) {
       return this.gApi.append(accessToken, spreadsheetId, sheetName, values);
     }
