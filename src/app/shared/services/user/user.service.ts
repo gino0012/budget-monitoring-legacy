@@ -7,7 +7,7 @@ import { GoogleService } from '../google/google.service';
 import { UserInterface } from '../../interfaces/user-interface';
 
 @Injectable()
-export class UserService implements UserInterface{
+export class UserService implements UserInterface {
 
   constructor(private googleService: GoogleService,
               private router: Router) { }

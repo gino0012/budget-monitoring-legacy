@@ -6,7 +6,7 @@ import { GoogleApiService } from './google-api.service';
 import { GoogleInterface } from '../../interfaces/google-interface';
 
 @Injectable()
-export class GoogleService implements GoogleInterface{
+export class GoogleService implements GoogleInterface {
 
   constructor(private gApi: GoogleApiService) { }
 

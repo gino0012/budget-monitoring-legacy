@@ -1,6 +1,6 @@
 import { GoogleInterface } from '../../interfaces/google-interface';
 
-export class MockGoogleService implements GoogleInterface{
+export class MockGoogleService implements GoogleInterface {
   getSpreadsheetIdByName = jasmine.createSpy('getSpreadsheetIdByName');
   createSpreadsheet = jasmine.createSpy('createSpreadsheet');
   authenticate = jasmine.createSpy('authenticate');
