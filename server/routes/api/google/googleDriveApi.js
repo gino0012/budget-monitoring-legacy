@@ -1,4 +1,3 @@
-var http = require('request-promise');
 var express = require('express');
 var _ = require('lodash');
 var google = require('googleapis');
@@ -21,7 +20,7 @@ module.exports = function (config) {
 
     googleDrive.files.list({auth: oauth2Client}, (err, response) => {
       if (err) {
-        return res.status(err.code).json(err);;
+        return res.status(err.code || 500).json(err);
       }
       var result = _.chain(response.files).find({name: req.query.file_name}).pick('id');
       return res.json(result);
