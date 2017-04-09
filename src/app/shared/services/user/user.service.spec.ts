@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Rx';
 import { UserService } from './user.service';
 import { GoogleService } from '../google/google.service';
 import { MockGoogleService } from '../../test/mocks/mock-google-service';
+import { UserDataService } from './user-data.service';
+import { MockUserDataService } from '../../test/mocks/mock-user-data-service';
 
 describe('UserService', () => {
   const mockAccessToken = {
@@ -21,7 +23,7 @@ describe('UserService', () => {
       verified_email: true,
       access_type: 'offline'
   };
-  let service, mockGoogleService, mockRouter;
+  let service, mockGoogleService, mockUserDataService,  mockRouter;
 
   beforeEach(() => {
     mockRouter = {
@@ -31,22 +33,24 @@ describe('UserService', () => {
     TestBed.configureTestingModule({
       providers: [UserService,
         { provide: GoogleService, useClass: MockGoogleService },
+        { provide: UserDataService, useClass: MockUserDataService },
         { provide: Router, useValue: mockRouter }
       ]
     });
   });
 
-  beforeEach(inject([UserService, GoogleService],
-    (_service_, _mockGoogleService) => {
+  beforeEach(inject([UserService, GoogleService, UserDataService],
+    (_service_, _mockGoogleService, _mockUserDataService_) => {
       service = _service_;
       mockGoogleService = _mockGoogleService;
+      mockUserDataService = _mockUserDataService_;
     }));
 
   afterEach(() => {
     localStorage.clear();
   });
 
-  describe('login(googleUser)', () => {
+  describe('login', () => {
     let mockGoogleUser;
 
     beforeEach(() => {
@@ -60,21 +64,21 @@ describe('UserService', () => {
       service.login(mockGoogleUser);
 
       expect(mockGoogleService.authenticate).toHaveBeenCalledWith(mockGoogleUser.code);
-      expect(localStorage.getItem('access_token')).toBe(mockAccessToken.access_token);
+      expect(mockUserDataService.setAccessToken).toHaveBeenCalledWith(mockAccessToken.access_token);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
     });
 
-    it('should login when google code is not null', () => {
+    it('should not login when google code is null', () => {
       mockGoogleUser.code = null;
       service.login(mockGoogleUser);
 
       expect(mockGoogleService.authenticate).not.toHaveBeenCalled();
-      expect(localStorage.getItem('access_token')).toBe(null);
+      expect(mockUserDataService.setAccessToken).not.toHaveBeenCalled();
       expect(mockRouter.navigate).not.toHaveBeenCalled();
     });
   });
 
-  describe('isLogin()', () => {
+  describe('isLogin', () => {
     let authSuccessSpy, authFailedSpy;
 
     beforeEach(() => {
@@ -84,11 +88,12 @@ describe('UserService', () => {
     });
 
     it('should check if already login', () => {
-      localStorage.setItem('access_token', mockAccessToken.access_token);
+      mockUserDataService.getAccessToken.and.returnValue(mockAccessToken.access_token);
 
       service.isLogin().subscribe(authSuccessSpy, authFailedSpy);
 
       expect(mockGoogleService.isAuthenticated).toHaveBeenCalledWith(mockAccessToken.access_token);
+      expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
       expect(authSuccessSpy).toHaveBeenCalledWith(true);
       expect(authFailedSpy).not.toHaveBeenCalled();
     });
@@ -97,16 +102,9 @@ describe('UserService', () => {
       service.isLogin().subscribe(authSuccessSpy, authFailedSpy);
 
       expect(mockGoogleService.isAuthenticated).not.toHaveBeenCalled();
+      expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
       expect(authSuccessSpy).not.toHaveBeenCalled();
       expect(authFailedSpy).toHaveBeenCalledWith(false);
-    });
-  });
-
-  describe('getAccessToken()', () => {
-    it('should get access token', () => {
-      localStorage.setItem('access_token', mockAccessToken.access_token);
-
-      expect(service.getAccessToken()).toBe(mockAccessToken.access_token);
     });
   });
 });
