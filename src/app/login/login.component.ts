@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 
-import { UserService } from '../shared/services/user/user-data.service';
+import { UserService } from '../shared/services/user/user.service';
 
 @Component({
   selector: 'app-login',

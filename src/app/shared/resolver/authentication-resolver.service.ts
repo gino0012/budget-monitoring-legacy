@@ -3,7 +3,7 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserService } from '../services/user/user-data.service';
+import { UserService } from '../services/user/user.service';
 
 @Injectable()
 export class AuthenticationResolver implements Resolve<Subscription> {

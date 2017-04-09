@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Rx';
 
-import { UserService } from './user-data.service';
+import { UserService } from './user.service';
 import { GoogleService } from '../google/google.service';
 
 describe('UserService', () => {

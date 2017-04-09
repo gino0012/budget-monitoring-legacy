@@ -4,10 +4,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { Constants } from '../constants/constants';
 import { GoogleService } from './google/google.service';
-import { UserService } from './user/user-data.service';
+import { UserService } from './user/user.service';
 
 import { MockGoogleService } from '../test/mocks/mock-google-service';
-import { MockUserDataService } from '../test/mocks/mock-user-data-service';
+import { MockUserService } from '../test/mocks/mock-user-service';
 
 import { BudgetService } from './budget.service';
 
@@ -22,25 +22,25 @@ describe('BudgetService', () => {
   const mockConstants = {
     DATA_FILE_NAME: 'data-file-name'
   };
-  let service, mockGoogleService, mockUserDataService;
+  let service, mockGoogleService, mockUserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [BudgetService, Constants,
         {provide: Constants, useValue: mockConstants},
-        {provide: UserService, useClass: MockUserDataService},
+        {provide: UserService, useClass: MockUserService},
         {provide: GoogleService, useClass: MockGoogleService}
       ]
     });
   });
 
   beforeEach(inject([BudgetService, UserService, GoogleService],
-   (_service_, _mockUserDataService_, _mockGoogleService_) => {
+   (_service_, _mockUserService_, _mockGoogleService_) => {
      service = _service_;
-     mockUserDataService = _mockUserDataService_;
+     mockUserService = _mockUserService_;
      mockGoogleService = _mockGoogleService_;
 
-     mockUserDataService.getAccessToken.and.returnValue(mockAccessToken);
+     mockUserService.getAccessToken.and.returnValue(mockAccessToken);
    }));
 
   describe('initializeDataOnStartup', () => {
@@ -57,7 +57,7 @@ describe('BudgetService', () => {
 
         service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
-        expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
+        expect(mockUserService.getAccessToken).toHaveBeenCalled();
         expect(mockGoogleService.getSpreadsheetIdByName)
           .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
         expect(mockGoogleService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
@@ -70,7 +70,7 @@ describe('BudgetService', () => {
 
         service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
-        expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
+        expect(mockUserService.getAccessToken).toHaveBeenCalled();
         expect(mockGoogleService.getSpreadsheetIdByName)
           .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
         expect(mockGoogleService.createSpreadsheet).not.toHaveBeenCalled();

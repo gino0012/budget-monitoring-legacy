@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { GoogleService } from './google/google.service';
-import { UserService } from './user/user-data.service';
+import { UserService } from './user/user.service';
 import { Constants } from '../constants/constants';
 
 @Injectable()
