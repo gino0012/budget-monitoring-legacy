@@ -19,8 +19,8 @@ export class BudgetService {
       .map(res => {
         const id = res['id'];
         if (!id) {
-          this.googleService.createSpreadsheet(accessToken, fileName).subscribe(res => {
-            this.userData.setDataId(res.spreadsheetid);
+          this.googleService.createSpreadsheet(accessToken, fileName).subscribe(response => {
+            this.userData.setDataId(response.spreadsheetid);
           });
         } else {
           this.userData.setDataId(id);
