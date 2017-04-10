@@ -11,11 +11,12 @@ import { MockUserDataService } from '../test/mocks/mock-user-data-service';
 
 describe('BudgetService', () => {
   const mockAccessToken = 'sample-access-token123';
+  const mockSpreadsheetId = 'sample-id123';
   const mockGetIdRes = {
-    id: 'sample-id123'
+    id: mockSpreadsheetId
   };
   const mockCreateRes = {
-    spreadsheetid: '12345-qwerty'
+    spreadsheetid: mockSpreadsheetId
   };
   const mockConstants = {
     DATA_FILE_NAME: 'data-file-name'
@@ -50,31 +51,33 @@ describe('BudgetService', () => {
     });
 
     it('should create spreadsheet when no existing data', () => {
-        mockGoogleService.getSpreadsheetIdByName.and.returnValue(Observable.of({}));
-        mockGoogleService.createSpreadsheet.and.returnValue(Observable.of(mockCreateRes));
+      mockGoogleService.getSpreadsheetIdByName.and.returnValue(Observable.of({}));
+      mockGoogleService.createSpreadsheet.and.returnValue(Observable.of(mockCreateRes));
 
-        service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
+      service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
-        expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
-        expect(mockGoogleService.getSpreadsheetIdByName)
-          .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
-        expect(mockGoogleService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
-        expect(initializeSuccessSpy).toHaveBeenCalled();
-        expect(initializeFailedSpy).not.toHaveBeenCalled();
-      });
+      expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
+      expect(mockGoogleService.getSpreadsheetIdByName)
+        .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
+      expect(mockGoogleService.createSpreadsheet).toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
+      expect(mockUserDataService.setDataId).toHaveBeenCalledWith(mockSpreadsheetId);
+      expect(initializeSuccessSpy).toHaveBeenCalled();
+      expect(initializeFailedSpy).not.toHaveBeenCalled();
+    });
 
     it('should not create spreadsheet when has existing data', () => {
-        mockGoogleService.getSpreadsheetIdByName.and.returnValue(Observable.of(mockGetIdRes));
+      mockGoogleService.getSpreadsheetIdByName.and.returnValue(Observable.of(mockGetIdRes));
 
-        service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
+      service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
-        expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
-        expect(mockGoogleService.getSpreadsheetIdByName)
-          .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
-        expect(mockGoogleService.createSpreadsheet).not.toHaveBeenCalled();
-        expect(initializeSuccessSpy).toHaveBeenCalled();
-        expect(initializeFailedSpy).not.toHaveBeenCalled();
-      });
+      expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
+      expect(mockGoogleService.getSpreadsheetIdByName)
+        .toHaveBeenCalledWith(mockAccessToken, mockConstants.DATA_FILE_NAME);
+      expect(mockGoogleService.createSpreadsheet).not.toHaveBeenCalled();
+      expect(mockUserDataService.setDataId).toHaveBeenCalledWith(mockSpreadsheetId);
+      expect(initializeSuccessSpy).toHaveBeenCalled();
+      expect(initializeFailedSpy).not.toHaveBeenCalled();
+    });
   });
 });
 
