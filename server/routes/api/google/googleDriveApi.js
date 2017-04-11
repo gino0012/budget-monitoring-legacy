@@ -20,7 +20,11 @@ module.exports = function (config) {
 
     googleDrive.files.list({auth: oauth2Client}, (err, response) => {
       if (err) {
-        return res.status(err.code || 500).json(err);
+        try {
+          return res.status(err.code).json(err);
+        } catch (ex) {
+          return res.status(500).json(err);
+        }
       }
       var result = _.chain(response.files).find({name: req.query.file_name}).pick('id');
       return res.json(result);

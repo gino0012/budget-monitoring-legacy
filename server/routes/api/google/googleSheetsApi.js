@@ -46,9 +46,9 @@ module.exports = function (config) {
 
     sheets.spreadsheets.create(request, function(err, response) {
       if (err) {
-        return res.status(err.code || 500).json(err.errors[0]);
+        return handleErrorResponse(res, err);
       }
-      return res.json(_.pick(response, 'spreadsheetId'));
+      return handleResponse(res, _.pick(response, 'spreadsheetId'));
     });
 
   });
@@ -70,11 +70,23 @@ module.exports = function (config) {
 
     sheets.spreadsheets.values.append(request, function(err, response) {
       if (err) {
-        return res.status(err.code || 500).json(err.errors[0]);
+        return handleErrorResponse(res, err);
       }
-      return res.json(response);
+      return handleResponse(res, response);
     });
   });
+
+  function handleErrorResponse(res, err) {
+    try {
+      return res.status(err.code).json(err.errors[0]);
+    } catch (ex) {
+      return res.status(500).json(err.errors[0]);
+    }
+  }
+
+  function handleResponse(res, response) {
+    return res.json(response);
+  }
 
   return apiRouter;
 };
