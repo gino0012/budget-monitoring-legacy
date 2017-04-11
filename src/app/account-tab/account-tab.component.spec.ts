@@ -72,7 +72,7 @@ describe('AccountTabComponent', () => {
     });
 
     it('should not add account after dialog close when no values', () => {
-      mockMdDialogRef.afterClosed.and.returnValue(Observable.of());
+      mockMdDialogRef.afterClosed.and.returnValue(Observable.of(undefined));
       mockMdDialog.open.and.returnValue(mockMdDialogRef);
 
       component.openDialog();
