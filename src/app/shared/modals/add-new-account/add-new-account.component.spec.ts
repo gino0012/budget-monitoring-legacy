@@ -50,5 +50,5 @@ describe('AddNewAccountComponent', () => {
 
       expect(mockMdDialogRef.close).toHaveBeenCalledWith(mockValues);
     });
-  })
+  });
 });
