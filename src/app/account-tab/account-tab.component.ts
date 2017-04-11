@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
 import { AddNewAccountComponent } from '../shared/modals/add-new-account/add-new-account.component';
+import { AccountService } from './account.service';
 
 @Component({
   selector: 'app-account-tab',
@@ -10,12 +11,19 @@ import { AddNewAccountComponent } from '../shared/modals/add-new-account/add-new
 })
 export class AccountTabComponent implements OnInit {
 
-  constructor(private dialog: MdDialog) { }
+  constructor(private dialog: MdDialog,
+              private accountService: AccountService) { }
 
   ngOnInit() {
   }
 
   openDialog() {
-    this.dialog.open(AddNewAccountComponent);
+    const dialogRef = this.dialog.open(AddNewAccountComponent);
+    dialogRef.afterClosed().subscribe(values => {
+      if (typeof values !== 'undefined') {
+        this.accountService.addAccount(values.maintaining, values.initial, values.other)
+          .subscribe(() => {});
+      }
+    });
   }
 }

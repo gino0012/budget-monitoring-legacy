@@ -24,6 +24,7 @@ import { LoaderBlueComponent } from './shared/loaders/loader-blue/loader-blue.co
 import { MainComponent } from './main/main.component';
 import { AddNewAccountComponent } from './shared/modals/add-new-account/add-new-account.component';
 import { AccountTabComponent } from './account-tab/account-tab.component';
+import { AccountService } from './account-tab/account.service';
 
 const appRoutes: Routes = [
   {
@@ -69,6 +70,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     AuthenticationResolver,
+    AccountService,
     BudgetService,
     Constants,
     GoogleApiService,

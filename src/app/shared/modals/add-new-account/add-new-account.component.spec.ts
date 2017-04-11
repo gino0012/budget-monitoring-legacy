@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MaterialModule, MdDialogRef } from '@angular/material';
 
 import { AddNewAccountComponent } from './add-new-account.component';
@@ -11,13 +12,12 @@ describe('AddNewAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ MaterialModule ],
+      imports: [ FormsModule, MaterialModule ],
       declarations: [ AddNewAccountComponent ],
       providers: [
         { provide: MdDialogRef, useClass: MockMdDialogRef }
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddNewAccountComponent);
     component = fixture.componentInstance;

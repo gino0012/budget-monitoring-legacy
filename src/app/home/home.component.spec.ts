@@ -10,6 +10,7 @@ import { LoaderBlueComponent } from '../shared/loaders/loader-blue/loader-blue.c
 import { AccountTabComponent } from '../account-tab/account-tab.component';
 
 import { BudgetService } from '../shared/services/budget.service';
+import { AccountService } from '../account-tab/account.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -31,7 +32,10 @@ describe('HomeComponent', () => {
         AccountTabComponent,
         LoaderBlueComponent
       ],
-      providers: [{ provide: BudgetService, useValue: mockBudgetService }]
+      providers: [
+        { provide: AccountService, useValue: {} },
+        { provide: BudgetService, useValue: mockBudgetService }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);

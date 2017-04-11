@@ -8,6 +8,7 @@ import { MainComponent } from './main.component';
 import { AccountTabComponent } from '../account-tab/account-tab.component';
 
 import { BudgetService } from '../shared/services/budget.service';
+import { AccountService } from '../account-tab/account.service';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -27,7 +28,10 @@ describe('MainComponent', () => {
         AccountTabComponent,
         LoaderBlueComponent
       ],
-      providers: [{ provide: BudgetService, useValue: mockBudgetService }]
+      providers: [
+        { provide: BudgetService, useValue: mockBudgetService },
+        { provide: AccountService, useValue: {} }
+      ]
     })
     .compileComponents();
   }));

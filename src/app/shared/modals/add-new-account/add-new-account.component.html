@@ -1,13 +1,13 @@
 <h1 md-dialog-title>New Account</h1>
 <form>
   <md-input-container>
-    <input mdInput placeholder="Maintaining Balance">
+    <input mdInput placeholder="Maintaining Balance" [(ngModel)]="maintaining" name="maintaining">
   </md-input-container>
   <md-input-container>
-    <input mdInput placeholder="Initial Balance">
+    <input mdInput placeholder="Initial Balance" [(ngModel)]="initial" name="initial">
   </md-input-container>
   <md-input-container>
-    <input mdInput placeholder="Other">
+    <input mdInput placeholder="Other" [(ngModel)]="other" name="other">
   </md-input-container>
 
   <div md-dialog-actions>
