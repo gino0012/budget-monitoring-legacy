@@ -25,7 +25,7 @@ describe('AlertService', () => {
     it('should show alert message', () => {
       const message = 'sample message';
       const config = new MdSnackBarConfig;
-      config.duration = 5;
+      config.duration = 5000;
 
       service.show(message);
 

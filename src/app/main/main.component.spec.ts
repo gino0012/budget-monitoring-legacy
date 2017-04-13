@@ -9,6 +9,9 @@ import { AccountTabComponent } from '../account-tab/account-tab.component';
 
 import { BudgetService } from '../shared/services/budget.service';
 import { AccountService } from '../account-tab/account.service';
+import { AlertService } from '../shared/services/alert.service';
+import { MockAccountService } from '../shared/test/mocks/mock-account-service';
+import { MockAlertService } from '../shared/test/mocks/mock-alert-service';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -30,17 +33,15 @@ describe('MainComponent', () => {
       ],
       providers: [
         { provide: BudgetService, useValue: mockBudgetService },
-        { provide: AccountService, useValue: {} }
+        { provide: AccountService, useClass: MockAccountService },
+        { provide: AlertService, useClass: MockAlertService}
       ]
-    })
-    .compileComponents();
-  }));
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(MainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

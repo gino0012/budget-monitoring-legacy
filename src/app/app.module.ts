@@ -25,6 +25,7 @@ import { MainComponent } from './main/main.component';
 import { AddNewAccountComponent } from './shared/modals/add-new-account/add-new-account.component';
 import { AccountTabComponent } from './account-tab/account-tab.component';
 import { AccountService } from './account-tab/account.service';
+import { AlertService } from './shared/services/alert.service';
 
 const appRoutes: Routes = [
   {
@@ -69,6 +70,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
+    AlertService,
     AuthenticationResolver,
     AccountService,
     BudgetService,

@@ -11,6 +11,9 @@ import { AccountTabComponent } from '../account-tab/account-tab.component';
 
 import { BudgetService } from '../shared/services/budget.service';
 import { AccountService } from '../account-tab/account.service';
+import { MockAccountService } from '../shared/test/mocks/mock-account-service';
+import { AlertService } from '../shared/services/alert.service';
+import { MockAlertService } from '../shared/test/mocks/mock-alert-service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -33,7 +36,8 @@ describe('HomeComponent', () => {
         LoaderBlueComponent
       ],
       providers: [
-        { provide: AccountService, useValue: {} },
+        { provide: AccountService, useClass: MockAccountService},
+        { provide: AlertService, useClass: MockAlertService},
         { provide: BudgetService, useValue: mockBudgetService }
       ]
     }).compileComponents();

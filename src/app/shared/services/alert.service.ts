@@ -9,7 +9,7 @@ export class AlertService implements AlertInterface {
 
   show(message: string) {
     const config = new MdSnackBarConfig;
-    config.duration = 5;
+    config.duration = 5000;
 
     this.snackBar.open(message, null, config);
   }

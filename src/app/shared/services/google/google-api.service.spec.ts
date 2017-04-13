@@ -47,7 +47,6 @@ describe('GoogleApiService', () => {
 
     it('should getAccessToken',
       inject([GoogleApiService, MockBackend], (service: GoogleApiService, mockBackend) => {
-
       const mockResAccessToken = {access_token: mockAccessToken};
       const mockCode = 'sample-code-123';
       httpGetResponseTo(mockBackend, buildUrl(mockCode), mockResAccessToken);
@@ -234,9 +233,7 @@ describe('GoogleApiService', () => {
         connection.request.method === RequestMethod.Post &&
         _.isEqual(JSON.parse(connection.request.getBody()), body)) {
 
-        connection.mockRespond(new Response(new ResponseOptions({
-          body: JSON.stringify(response)
-        })));
+        connection.mockRespond(buildResponse(response));
       }
     });
   }
@@ -247,7 +244,7 @@ describe('GoogleApiService', () => {
         connection.request.method === RequestMethod.Post &&
         _.isEqual(JSON.parse(connection.request.getBody()), body)) {
 
-        connection.mockError(response);
+        connection.mockError(buildResponse(response));
       }
     });
   }
@@ -257,9 +254,7 @@ describe('GoogleApiService', () => {
       if (connection.request.url === expectedUrl &&
         connection.request.method === RequestMethod.Get) {
 
-        connection.mockRespond(new Response(new ResponseOptions({
-          body: JSON.stringify(response)
-        })));
+        connection.mockRespond(buildResponse(response));
       }
     });
   }
@@ -269,8 +264,14 @@ describe('GoogleApiService', () => {
       if (connection.request.url === expectedUrl &&
         connection.request.method === RequestMethod.Get) {
 
-        connection.mockError(response);
+        connection.mockError(buildResponse(response));
       }
     });
+  }
+
+  function buildResponse(body) {
+    return new Response(new ResponseOptions({
+      body: JSON.stringify(body)
+    }));
   }
 });
