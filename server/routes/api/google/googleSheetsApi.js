@@ -77,11 +77,10 @@ module.exports = function (config) {
   });
 
   function handleErrorResponse(res, err) {
-    try {
-      return res.status(err.code).json(err.errors[0]);
-    } catch (ex) {
-      return res.status(500).json(err.errors[0]);
+    if (err.code === 'ETIMEDOUT') {
+      return res.status(500).json(err);
     }
+    return res.status(err.code).json(err.errors[0]);
   }
 
   function handleResponse(res, response) {
