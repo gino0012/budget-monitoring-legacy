@@ -23,7 +23,7 @@ module.exports = function (config) {
         if (err.code === 'ETIMEDOUT') {
           return res.status(500).json(err);
         }
-        return res.status(err.code).json(err);
+        return res.status(err.code).json(err.errors[0]);
       }
       var result = _.chain(response.files).find({name: req.query.file_name}).pick('id');
       return res.json(result);

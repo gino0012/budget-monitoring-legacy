@@ -8,6 +8,8 @@ import { MockGoogleService } from '../test/mocks/mock-google-service';
 import { BudgetService } from './budget.service';
 import { UserDataService } from './user/user-data.service';
 import { MockUserDataService } from '../test/mocks/mock-user-data-service';
+import { AlertService } from './alert.service';
+import { MockAlertService } from '../test/mocks/mock-alert-service';
 
 describe('BudgetService', () => {
   const mockAccessToken = 'sample-access-token123';
@@ -21,23 +23,30 @@ describe('BudgetService', () => {
   const mockConstants = {
     DATA_FILE_NAME: 'data-file-name'
   };
-  let service, mockGoogleService, mockUserDataService;
+  let service: BudgetService,
+    mockGoogleService: MockGoogleService,
+    mockUserDataService: MockUserDataService,
+    mockAlertService: MockAlertService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BudgetService, Constants,
-        {provide: Constants, useValue: mockConstants},
-        {provide: UserDataService, useClass: MockUserDataService},
-        {provide: GoogleService, useClass: MockGoogleService}
+      providers: [
+        BudgetService,
+        Constants,
+        { provide: Constants, useValue: mockConstants },
+        { provide: UserDataService, useClass: MockUserDataService },
+        { provide: GoogleService, useClass: MockGoogleService },
+        { provide: AlertService, useClass: MockAlertService }
       ]
     });
   });
 
-  beforeEach(inject([BudgetService, UserDataService, GoogleService],
-   (_service_, _mockUserDataService_, _mockGoogleService_) => {
+  beforeEach(inject([BudgetService, UserDataService, GoogleService, AlertService],
+   (_service_, _mockUserDataService_, _mockGoogleService_, _mockAlertService_) => {
      service = _service_;
      mockUserDataService = _mockUserDataService_;
      mockGoogleService = _mockGoogleService_;
+     mockAlertService = _mockAlertService_;
 
      mockUserDataService.getAccessToken.and.returnValue(mockAccessToken);
    }));
@@ -77,6 +86,29 @@ describe('BudgetService', () => {
       expect(mockUserDataService.setDataId).toHaveBeenCalledWith(mockSpreadsheetId);
       expect(initializeSuccessSpy).toHaveBeenCalled();
       expect(initializeFailedSpy).not.toHaveBeenCalled();
+    });
+
+    it('should show error alert when initialization failed', () => {
+      mockGoogleService.getSpreadsheetIdByName.and.returnValue(Observable.throw({}));
+
+      service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
+
+      expect(initializeSuccessSpy).not.toHaveBeenCalled();
+      expect(initializeFailedSpy).toHaveBeenCalledWith({});
+      expect(mockAlertService.show).toHaveBeenCalledWith('Error Initializing Data');
+    });
+
+    it('should show error alert when initialization failed with error message', () => {
+      const errorRes = {
+        message: 'error message'
+      };
+      mockGoogleService.getSpreadsheetIdByName.and.returnValue(Observable.throw(errorRes));
+
+      service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
+
+      expect(initializeSuccessSpy).not.toHaveBeenCalled();
+      expect(initializeFailedSpy).toHaveBeenCalledWith(errorRes);
+      expect(mockAlertService.show).toHaveBeenCalledWith(errorRes.message);
     });
   });
 });
