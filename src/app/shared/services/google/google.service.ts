@@ -27,7 +27,7 @@ export class GoogleService implements GoogleInterface {
     this.alertService.show(errorMessage.error + ': ' + errorMessage.error_description);
     return Observable.throw(errorMessage);
   }
-gi
+
   isAuthenticated(accessToken: string): Observable<boolean> {
     if (accessToken) {
       return this.gApi.isAuthenticated(accessToken);

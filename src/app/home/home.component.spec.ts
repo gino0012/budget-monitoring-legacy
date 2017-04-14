@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { MaterialModule } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
@@ -14,11 +14,14 @@ import { AccountService } from '../account-tab/account.service';
 import { MockAccountService } from '../shared/test/mocks/mock-account-service';
 import { AlertService } from '../shared/services/alert.service';
 import { MockAlertService } from '../shared/test/mocks/mock-alert-service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MockActivatedRoute } from '../shared/test/mocks/mock-activated-route';
+import { MockRouter } from '../shared/test/mocks/mock-router';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let mockBudgetService;
+  let mockBudgetService, mockActivatedRoute;
 
   beforeEach(async(() => {
     mockBudgetService = {
@@ -38,13 +41,21 @@ describe('HomeComponent', () => {
       providers: [
         { provide: AccountService, useClass: MockAccountService},
         { provide: AlertService, useClass: MockAlertService},
-        { provide: BudgetService, useValue: mockBudgetService }
+        { provide: BudgetService, useValue: mockBudgetService },
+        { provide: ActivatedRoute, useClass: MockActivatedRoute },
+        { provide: Router, useClass: MockRouter }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  }));
+
+  beforeEach(inject([ActivatedRoute], (_mockActivatedRoute_) => {
+    mockActivatedRoute = _mockActivatedRoute_;
+
+    mockActivatedRoute.snapshot.data['isAuthenticated'] = false;
   }));
 
   it('should create the app', async(() => {
