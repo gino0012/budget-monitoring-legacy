@@ -3,37 +3,38 @@ import { Http, Request, RequestMethod, RequestOptions, Headers } from '@angular/
 
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import { GoogleApiServiceInterface } from '../../interfaces/google-api-service-interface';
 
 @Injectable()
-export class GoogleApiService {
+export class GoogleApiService implements GoogleApiServiceInterface {
 
   constructor(private http: Http) { }
 
-  getAccessToken(code) {
+  getAccessToken(code: string): Observable<any>{
     const api = '/getAccessToken?code=' + code;
     return this.http.request(this.createPayload(RequestMethod.Get, api, null))
       .map(res => res.json()).catch(err => Observable.throw(err.json()));
   }
 
-  isAuthenticated(accessToken) {
+  isAuthenticated(accessToken: string): Observable<any> {
     const api = '/isAuthenticated?access_token=' + accessToken;
     return this.http.request(this.createPayload(RequestMethod.Get, api, null))
       .map(res => res.json()).catch(err => Observable.throw(err.json()));
   }
 
-  getSpreadSheetIdByName(accessToken, fileName) {
+  getSpreadSheetIdByName(accessToken: string, fileName: string): Observable<any> {
     const api = '/drive/getSpreadSheetIdByName?access_token=' + accessToken + '&file_name=' + fileName;
     return this.http.request(this.createPayload(RequestMethod.Get, api, null))
       .map(res => res.json()).catch(err => Observable.throw(err.json()));
   }
 
-  createSpreadsheet(accessToken, fileName) {
+  createSpreadsheet(accessToken: string, fileName: string): Observable<any> {
     const api = '/sheets/createSpreadsheet?access_token=' + accessToken + '&file_name=' + fileName;
     return this.http.request(this.createPayload(RequestMethod.Get, api, null))
         .map(res => res.json()).catch(err => Observable.throw(err.json()));
   }
 
-  append(accessToken, spreadsheetId, sheetName, values) {
+  append(accessToken: string, spreadsheetId: string, sheetName: string, values: Array<any>): Observable<any> {
     const body = {
       access_token: accessToken,
       spreadsheet_id: spreadsheetId,
@@ -44,7 +45,7 @@ export class GoogleApiService {
       .map(res => res.json()).catch(err => Observable.throw(err.json()));
   }
 
-  private createPayload(method, api, data): Request {
+  private createPayload(method: RequestMethod, api: string, data: any): Request {
     const payload = new RequestOptions;
     payload.method = method;
     payload.url = '/api/google' + api;
