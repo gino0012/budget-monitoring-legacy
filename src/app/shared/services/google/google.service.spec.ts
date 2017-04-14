@@ -43,9 +43,9 @@ describe('GoogleService', () => {
       mockGoogleApiService.append.and.returnValue(Observable.of(mockCreateResponse));
     }));
 
-  describe('authenticate(googleUser)', () => {
+  describe('authenticate', () => {
     const mockGoogleCode = 'sample-google-code123';
-    let authSuccessSpy, authFailedSpy;
+    let authSuccessSpy, authFailedSpy, errorMsg;
 
     beforeEach(() => {
       authSuccessSpy = jasmine.createSpy('auth success');
@@ -60,32 +60,30 @@ describe('GoogleService', () => {
       expect(authFailedSpy).not.toHaveBeenCalled();
     });
 
-    it('should not get access token when code is null', () => {
-      const errorMessage = {
-        error: 'Unable to login',
-        error_description: 'google code is null'
-      };
-
-      service.authenticate(null).subscribe(authSuccessSpy, authFailedSpy);
-
-      expect(mockGoogleApiService.getAccessToken).not.toHaveBeenCalled();
-      expect(mockAlertService.show).toHaveBeenCalledWith(errorMessage.error + ': ' + errorMessage.error_description);
-      expect(authSuccessSpy).not.toHaveBeenCalled();
-      expect(authFailedSpy).toHaveBeenCalledWith(errorMessage);
-    });
-
     it('should alert error when error occurred', () => {
-      const errorMessage = {
+      errorMsg = {
         error: 'Invalid Grant'
       };
-      mockGoogleApiService.getAccessToken.and.returnValue(Observable.throw(JSON.stringify(errorMessage)));
+      mockGoogleApiService.getAccessToken.and.returnValue(Observable.throw(JSON.stringify(errorMsg)));
 
       service.authenticate(mockGoogleCode).subscribe(authSuccessSpy, authFailedSpy);
 
       expect(mockGoogleApiService.getAccessToken).toHaveBeenCalledWith(mockGoogleCode);
-      expect(mockAlertService.show).toHaveBeenCalledWith(errorMessage.error);
+      expect(mockAlertService.show).toHaveBeenCalledWith(errorMsg.error);
       expect(authSuccessSpy).not.toHaveBeenCalled();
-      expect(authFailedSpy).toHaveBeenCalledWith(errorMessage);
+      expect(authFailedSpy).toHaveBeenCalledWith(errorMsg);
+    });
+
+    it('should alert error when timeout occurred', () => {
+      errorMsg = 'Unable to Login';
+      mockGoogleApiService.getAccessToken.and.returnValue(Observable.throw({}));
+
+      service.authenticate(mockGoogleCode).subscribe(authSuccessSpy, authFailedSpy);
+
+      expect(mockGoogleApiService.getAccessToken).toHaveBeenCalledWith(mockGoogleCode);
+      expect(mockAlertService.show).toHaveBeenCalledWith(errorMsg);
+      expect(authSuccessSpy).not.toHaveBeenCalled();
+      expect(authFailedSpy).toHaveBeenCalledWith(errorMsg);
     });
   });
 

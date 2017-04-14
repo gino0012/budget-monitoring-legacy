@@ -34,7 +34,7 @@ export class BudgetService {
         } else {
           this.alertService.show('Error Initializing Data');
         }
-        return Observable.throw(err);
+        return Observable.of(err);
       });
   }
 }

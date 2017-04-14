@@ -93,8 +93,8 @@ describe('BudgetService', () => {
 
       service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
-      expect(initializeSuccessSpy).not.toHaveBeenCalled();
-      expect(initializeFailedSpy).toHaveBeenCalledWith({});
+      expect(initializeSuccessSpy).toHaveBeenCalledWith({});
+      expect(initializeFailedSpy).not.toHaveBeenCalled();
       expect(mockAlertService.show).toHaveBeenCalledWith('Error Initializing Data');
     });
 
@@ -106,8 +106,8 @@ describe('BudgetService', () => {
 
       service.initializeDataOnStartup().subscribe(initializeSuccessSpy, initializeFailedSpy);
 
-      expect(initializeSuccessSpy).not.toHaveBeenCalled();
-      expect(initializeFailedSpy).toHaveBeenCalledWith(errorRes);
+      expect(initializeSuccessSpy).toHaveBeenCalledWith(errorRes);
+      expect(initializeFailedSpy).not.toHaveBeenCalled();
       expect(mockAlertService.show).toHaveBeenCalledWith(errorRes.message);
     });
   });
