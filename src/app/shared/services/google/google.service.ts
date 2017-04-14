@@ -4,20 +4,25 @@ import { Observable } from 'rxjs/Rx';
 
 import { GoogleApiService } from './google-api.service';
 import { GoogleInterface } from '../../interfaces/google-interface';
+import { AlertService } from '../alert.service';
 
 @Injectable()
 export class GoogleService implements GoogleInterface {
 
-  constructor(private gApi: GoogleApiService) { }
+  constructor(private gApi: GoogleApiService,
+              private alertService: AlertService) { }
 
   authenticate(googleCode: string): Observable<any> {
     if (googleCode) {
       return this.gApi.getAccessToken(googleCode);
     }
-    return Observable.throw({
+
+    const errorMessage = {
       error: 'Unable to login',
       error_description: 'google code is null'
-    });
+    };
+    this.alertService.show(errorMessage.error + ': ' + errorMessage.error_description);
+    return Observable.throw(errorMessage);
   }
 
   isAuthenticated(accessToken: string): Observable<boolean> {
@@ -31,29 +36,36 @@ export class GoogleService implements GoogleInterface {
     if (accessToken) {
       return this.gApi.createSpreadsheet(accessToken, fileName);
     }
-    return Observable.throw({
+
+    const errorMsg = {
       error: 'Unable to create spreadsheet',
       error_description: 'access token is null'
-    });
+    };
+    this.alertService.show(errorMsg.error + ': ' + errorMsg.error_description);
+    return Observable.throw(errorMsg);
   }
 
   getSpreadsheetIdByName(accessToken: string, fileName: string): Observable<any> {
     if (accessToken && fileName) {
       return this.gApi.getSpreadSheetIdByName(accessToken, fileName);
     }
-    return Observable.throw({
+    const errorMsg = {
       error: 'Unable to get spreadsheet id',
       error_description: 'access token or file name is null'
-    });
+    };
+    this.alertService.show(errorMsg.error + ': ' + errorMsg.error_description);
+    return Observable.throw(errorMsg);
   }
 
   appendData(accessToken: string, spreadsheetId: string, sheetName: string, values: Array<any>): Observable<any> {
     if (accessToken) {
       return this.gApi.append(accessToken, spreadsheetId, sheetName, values);
     }
-    return Observable.throw({
+    const errorMSg = {
       error: 'Unable to append data to workbook',
       error_description: 'access token is null'
-    });
+    };
+    this.alertService.show(errorMSg.error + ': ' + errorMSg.error_description);
+    return Observable.throw(errorMSg);
   }
 }

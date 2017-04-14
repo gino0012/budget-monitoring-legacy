@@ -62,14 +62,17 @@ describe('GoogleService', () => {
     });
 
     it('should not get access token when code is null', () => {
+      const errorMessage = {
+        error: 'Unable to login',
+        error_description: 'google code is null'
+      };
+
       service.authenticate(null).subscribe(authSuccessSpy, authFailedSpy);
 
       expect(mockGoogleApiService.getAccessToken).not.toHaveBeenCalled();
+      expect(mockAlertService.show).toHaveBeenCalledWith(errorMessage.error + ': ' + errorMessage.error_description);
       expect(authSuccessSpy).not.toHaveBeenCalled();
-      expect(authFailedSpy).toHaveBeenCalledWith({
-        error: 'Unable to login',
-        error_description: 'google code is null'
-      });
+      expect(authFailedSpy).toHaveBeenCalledWith(errorMessage);
     });
   });
 
@@ -118,23 +121,21 @@ describe('GoogleService', () => {
     });
 
     it('should not create spreadsheet when access token is null', () => {
-      service.createSpreadsheet(null, mockFileName)
-        .subscribe(createSuccessSpy, createFailedSpy);
-
-      expect(mockGoogleApiService.isAuthenticated).not.toHaveBeenCalled();
-      expect(createSuccessSpy).not.toHaveBeenCalled();
-      expect(createFailedSpy).toHaveBeenCalledWith({
+      const errorMsg = {
         error: 'Unable to create spreadsheet',
         error_description: 'access token is null'
-      });
+      };
+
+      service.createSpreadsheet(null, mockFileName).subscribe(createSuccessSpy, createFailedSpy);
+
+      expect(mockGoogleApiService.isAuthenticated).not.toHaveBeenCalled();
+      expect(mockAlertService.show).toHaveBeenCalledWith(errorMsg.error + ': ' + errorMsg.error_description);
+      expect(createSuccessSpy).not.toHaveBeenCalled();
+      expect(createFailedSpy).toHaveBeenCalledWith(errorMsg);
     });
   });
 
   describe('getSpreadsheetIdByName(accessToken, fileName)', () => {
-    const mockErrorRes = {
-      error: 'Unable to get spreadsheet id',
-      error_description: 'access token or file name is null'
-    };
     let getSpreadsheetIdSuccessSpy, getSpreadsheetIdFailedSpy;
 
     beforeEach(() => {
@@ -166,7 +167,13 @@ describe('GoogleService', () => {
     });
 
     function expectFailedSpy() {
+      const mockErrorRes = {
+        error: 'Unable to get spreadsheet id',
+        error_description: 'access token or file name is null'
+      };
+
       expect(mockGoogleApiService.getSpreadSheetIdByName).not.toHaveBeenCalled();
+      expect(mockAlertService.show).toHaveBeenCalledWith(mockErrorRes.error + ': ' + mockErrorRes.error_description);
       expect(getSpreadsheetIdSuccessSpy).not.toHaveBeenCalled();
       expect(getSpreadsheetIdFailedSpy).toHaveBeenCalledWith(mockErrorRes);
     }
@@ -175,10 +182,6 @@ describe('GoogleService', () => {
   describe('appendData', () => {
     const mockSheetName = 'name';
     const mockValues = [1, 2, 3];
-    const mockErrorRes = {
-      error: 'Unable to append data to workbook',
-      error_description: 'access token is null'
-    };
     let appendDataSuccessSpy, appendDataFailedSpy;
 
     beforeEach(() => {
@@ -201,10 +204,16 @@ describe('GoogleService', () => {
     });
 
     it('should not append data when access token is null', () => {
+      const mockErrorRes = {
+        error: 'Unable to append data to workbook',
+        error_description: 'access token is null'
+      };
+
       service.appendData(null, mockSpreadsheetId, mockSheetName, mockValues)
         .subscribe(appendDataSuccessSpy, appendDataFailedSpy);
 
       expect(mockGoogleApiService.append).not.toHaveBeenCalled();
+      expect(mockAlertService.show).toHaveBeenCalledWith(mockErrorRes.error + ': ' + mockErrorRes.error_description);
       expect(appendDataSuccessSpy).not.toHaveBeenCalled();
       expect(appendDataFailedSpy).toHaveBeenCalledWith(mockErrorRes);
     });
