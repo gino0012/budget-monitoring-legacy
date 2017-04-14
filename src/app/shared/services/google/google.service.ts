@@ -14,9 +14,12 @@ export class GoogleService implements GoogleInterface {
 
   authenticate(googleCode: string): Observable<any> {
     if (googleCode) {
-      return this.gApi.getAccessToken(googleCode);
+      return this.gApi.getAccessToken(googleCode).map(res => res).catch(err => {
+        const error = JSON.parse(err);
+        this.alertService.show(error.error);
+        return Observable.throw(error);
+      });
     }
-
     const errorMessage = {
       error: 'Unable to login',
       error_description: 'google code is null'
@@ -24,7 +27,7 @@ export class GoogleService implements GoogleInterface {
     this.alertService.show(errorMessage.error + ': ' + errorMessage.error_description);
     return Observable.throw(errorMessage);
   }
-
+gi
   isAuthenticated(accessToken: string): Observable<boolean> {
     if (accessToken) {
       return this.gApi.isAuthenticated(accessToken);

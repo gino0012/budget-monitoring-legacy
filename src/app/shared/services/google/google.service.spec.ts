@@ -44,6 +44,7 @@ describe('GoogleService', () => {
     }));
 
   describe('authenticate(googleUser)', () => {
+    const mockGoogleCode = 'sample-google-code123';
     let authSuccessSpy, authFailedSpy;
 
     beforeEach(() => {
@@ -52,8 +53,6 @@ describe('GoogleService', () => {
     });
 
     it('should get access token', () => {
-      const mockGoogleCode = 'sample-google-code123';
-
       service.authenticate(mockGoogleCode).subscribe(authSuccessSpy, authFailedSpy);
 
       expect(mockGoogleApiService.getAccessToken).toHaveBeenCalledWith(mockGoogleCode);
@@ -71,6 +70,20 @@ describe('GoogleService', () => {
 
       expect(mockGoogleApiService.getAccessToken).not.toHaveBeenCalled();
       expect(mockAlertService.show).toHaveBeenCalledWith(errorMessage.error + ': ' + errorMessage.error_description);
+      expect(authSuccessSpy).not.toHaveBeenCalled();
+      expect(authFailedSpy).toHaveBeenCalledWith(errorMessage);
+    });
+
+    it('should alert error when error occurred', () => {
+      const errorMessage = {
+        error: 'Invalid Grant'
+      };
+      mockGoogleApiService.getAccessToken.and.returnValue(Observable.throw(JSON.stringify(errorMessage)));
+
+      service.authenticate(mockGoogleCode).subscribe(authSuccessSpy, authFailedSpy);
+
+      expect(mockGoogleApiService.getAccessToken).toHaveBeenCalledWith(mockGoogleCode);
+      expect(mockAlertService.show).toHaveBeenCalledWith(errorMessage.error);
       expect(authSuccessSpy).not.toHaveBeenCalled();
       expect(authFailedSpy).toHaveBeenCalledWith(errorMessage);
     });
