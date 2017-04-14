@@ -51,7 +51,7 @@ describe('GoogleService', () => {
       authFailedSpy = jasmine.createSpy('auth failed');
     });
 
-    it('should get access token',() => {
+    it('should get access token', () => {
       const mockGoogleCode = 'sample-google-code123';
 
       service.authenticate(mockGoogleCode).subscribe(authSuccessSpy, authFailedSpy);

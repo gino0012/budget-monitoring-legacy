@@ -10,7 +10,7 @@ export class GoogleApiService implements GoogleApiServiceInterface {
 
   constructor(private http: Http) { }
 
-  getAccessToken(code: string): Observable<any>{
+  getAccessToken(code: string): Observable<any> {
     const api = '/getAccessToken?code=' + code;
     return this.http.request(this.createPayload(RequestMethod.Get, api, null))
       .map(res => res.json()).catch(err => Observable.throw(err.json()));
