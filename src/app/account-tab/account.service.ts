@@ -15,6 +15,7 @@ export class AccountService implements AccountInterface {
               private constants: Constants) { }
 
   addAccount(maintaining: number, initial: number, other: number): Observable<any> {
+    this.alertService.display('Adding account...');
     const accessToken = this.userData.getAccessToken();
     const dataId = this.userData.getDataId();
     const sheetName = this.constants.SHEET_NAME.ACCOUNTS;
@@ -31,6 +32,8 @@ export class AccountService implements AccountInterface {
           this.alertService.show('Error occurred while adding Account');
         }
         return Observable.throw(err);
+      }).finally(() => {
+        this.alertService.hide();
       });
   }
 }

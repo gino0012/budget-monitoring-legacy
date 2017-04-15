@@ -96,10 +96,12 @@ describe('AccountService', () => {
     });
 
     function expectAppendDataToHaveBeenCalled() {
+      expect(mockAlertService.display).toHaveBeenCalledWith('Adding account...');
       expect(mockUserData.getAccessToken).toHaveBeenCalled();
       expect(mockUserData.getDataId).toHaveBeenCalled();
       expect(mockGoogleService.appendData).toHaveBeenCalledWith(mockAccessToken, mockDataId,
         constants.SHEET_NAME.ACCOUNTS, mockValues);
+      expect(mockAlertService.hide).toHaveBeenCalled();
     }
   });
 });
