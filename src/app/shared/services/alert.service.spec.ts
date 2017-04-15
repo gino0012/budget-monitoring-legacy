@@ -4,6 +4,7 @@ import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { MockMdSnackBar } from '../test/mocks/mock-md-snack-bar';
 
 describe('AlertService', () => {
+  const mockMessage = 'sample message';
   let service, mockMdSnackBar;
 
   beforeEach(() => {
@@ -23,13 +24,35 @@ describe('AlertService', () => {
 
   describe('show', () => {
     it('should show alert message', () => {
-      const message = 'sample message';
       const config = new MdSnackBarConfig;
       config.duration = 5000;
 
-      service.show(message);
+      service.show(mockMessage);
 
-      expect(mockMdSnackBar.open).toHaveBeenCalledWith(message, null, config);
+      expect(mockMdSnackBar.open).toHaveBeenCalledWith(mockMessage, null, config);
+    });
+  });
+
+  describe('display', () => {
+    it('should display alert message', () => {
+      service.display(mockMessage);
+
+      expect(mockMdSnackBar.open).toHaveBeenCalledWith(mockMessage);
+    });
+  });
+
+  describe('hide', () => {
+    it('should hide alert message', () => {
+      const mockMockMdSnackBarRef = {
+        dismiss: jasmine.createSpy('snack bar ref dismiss')
+      };
+      mockMdSnackBar.open.and.returnValue(mockMockMdSnackBarRef);
+
+      service.display(mockMessage);
+      service.hide();
+
+      expect(mockMdSnackBar.open).toHaveBeenCalledWith(mockMessage);
+      expect(mockMockMdSnackBarRef.dismiss).toHaveBeenCalled();
     });
   });
 });
