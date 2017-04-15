@@ -4,12 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import { GoogleService } from '../shared/services/google/google.service';
 import { UserDataService } from '../shared/services/user/user-data.service';
 import { Constants } from '../shared/constants/constants';
+import { AlertService } from '../shared/services/alert.service';
 
 @Injectable()
 export class AccountService implements AccountInterface {
 
   constructor(private googleService: GoogleService,
               private userData: UserDataService,
+              private alertService: AlertService,
               private constants: Constants) { }
 
   addAccount(maintaining: number, initial: number, other: number): Observable<any> {
@@ -19,7 +21,15 @@ export class AccountService implements AccountInterface {
     const values = [maintaining, initial, other];
 
     return this.googleService.appendData(accessToken, dataId, sheetName, values)
-      .map(res => res).catch(err => {
+      .map(res => {
+        this.alertService.show('Successfully added');
+        return res;
+      }).catch(err => {
+        if (err.message) {
+          this.alertService.show(err.message);
+        } else {
+          this.alertService.show('Error occurred while adding Account');
+        }
         return Observable.throw(err);
       });
   }
