@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AlertInterface } from '../interfaces/alert-interface';
 import { MdSnackBar, MdSnackBarConfig, MdSnackBarRef } from '@angular/material';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable()
 export class AlertService implements AlertInterface {
-  private snackBarRefs: Array<MdSnackBarRef>;
+  private snackBarRefs: Array<MdSnackBarRef<any>>;
 
   constructor(private snackBar: MdSnackBar) {
     this.snackBarRefs = [];
@@ -23,8 +22,8 @@ export class AlertService implements AlertInterface {
   }
 
   hide() {
-    forEach(this.snackBarRefs, (snackBarRef: MdSnackBarRef) => {
+    for (const snackBarRef of this.snackBarRefs) {
       snackBarRef.dismiss();
-    });
+    }
   }
 }
