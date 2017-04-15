@@ -7,9 +7,11 @@ import { MdDialogRef } from '@angular/material';
   styleUrls: ['./add-new-account.component.css']
 })
 export class AddNewAccountComponent implements OnInit {
+  name: string;
   maintaining: number;
   initial: number;
   other: number;
+  description: string;
 
   constructor(public dialogRef: MdDialogRef<AddNewAccountComponent>) { }
 
@@ -18,9 +20,11 @@ export class AddNewAccountComponent implements OnInit {
 
   addAccount() {
     this.dialogRef.close({
+      name: this.name,
       maintaining: this.maintaining,
       initial: this.initial,
-      other: this.other
+      other: this.other,
+      description: this.description
     });
   }
 }

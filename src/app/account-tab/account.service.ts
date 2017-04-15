@@ -14,12 +14,12 @@ export class AccountService implements AccountInterface {
               private alertService: AlertService,
               private constants: Constants) { }
 
-  addAccount(maintaining: number, initial: number, other: number): Observable<any> {
+  addAccount(name: string, maintaining: number, initial: number, other: number, description: string): Observable<any> {
     this.alertService.display('Adding account...');
     const accessToken = this.userData.getAccessToken();
     const dataId = this.userData.getDataId();
     const sheetName = this.constants.SHEET_NAME.ACCOUNTS;
-    const values = [maintaining, initial, other];
+    const values = [name, maintaining, initial, other, description];
 
     return this.googleService.appendData(accessToken, dataId, sheetName, values)
       .map(res => {

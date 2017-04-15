@@ -40,10 +40,12 @@ describe('AccountService', () => {
 
   describe('addAccount', () => {
     const constants = new Constants();
+    const mockName = 'account name';
     const mockMaintaining = 123;
     const mockInitial = 456;
     const mockOther = 789;
-    const mockValues = [mockMaintaining, mockInitial, mockOther];
+    const mockDescription = 'sample description';
+    const mockValues = [mockName, mockMaintaining, mockInitial, mockOther, mockDescription];
     let addAccountSuccessSpy, addAccountFailedSpy;
 
     beforeEach(() => {
@@ -59,7 +61,7 @@ describe('AccountService', () => {
       };
       mockGoogleService.appendData.and.returnValue(Observable.of(mockRes));
 
-      service.addAccount(mockMaintaining, mockInitial, mockOther)
+      service.addAccount(mockName, mockMaintaining, mockInitial, mockOther, mockDescription)
         .subscribe(addAccountSuccessSpy, addAccountFailedSpy);
 
       expectAppendDataToHaveBeenCalled();
@@ -74,7 +76,7 @@ describe('AccountService', () => {
       };
       mockGoogleService.appendData.and.returnValue(Observable.throw(mockErrorRes));
 
-      service.addAccount(mockMaintaining, mockInitial, mockOther)
+      service.addAccount(mockName, mockMaintaining, mockInitial, mockOther, mockDescription)
         .subscribe(addAccountSuccessSpy, addAccountFailedSpy);
 
       expectAppendDataToHaveBeenCalled();
@@ -86,7 +88,7 @@ describe('AccountService', () => {
     it('should not add account when timeout occurred', () => {
       mockGoogleService.appendData.and.returnValue(Observable.throw({}));
 
-      service.addAccount(mockMaintaining, mockInitial, mockOther)
+      service.addAccount(mockName, mockMaintaining, mockInitial, mockOther, mockDescription)
         .subscribe(addAccountSuccessSpy, addAccountFailedSpy);
 
       expectAppendDataToHaveBeenCalled();

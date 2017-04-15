@@ -35,15 +35,19 @@ describe('AddNewAccountComponent', () => {
 
   describe('addAccount', () => {
     const mockValues = {
+      name: 'account name',
       maintaining: 100,
       initial: 200,
-      other: 300
+      other: 300,
+      description: 'description'
     };
 
     it('should add account', () => {
+      component.name = mockValues.name;
       component.maintaining = mockValues.maintaining;
       component.initial = mockValues.initial;
       component.other = mockValues.other;
+      component.description = mockValues.description;
       fixture.detectChanges();
 
       component.addAccount();

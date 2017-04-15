@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdDialogConfig } from '@angular/material';
 
 import { AddNewAccountComponent } from '../shared/modals/add-new-account/add-new-account.component';
 import { AccountService } from './account.service';
@@ -18,11 +18,13 @@ export class AccountTabComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(AddNewAccountComponent);
+    const config = new MdDialogConfig;
+    config.width = '500px';
+    const dialogRef = this.dialog.open(AddNewAccountComponent, config);
     dialogRef.afterClosed().subscribe(values => {
       if (typeof values !== 'undefined') {
-        this.accountService.addAccount(values.maintaining, values.initial, values.other)
-          .subscribe(() => {}, () => {});
+        this.accountService.addAccount(values.name, values.maintaining, values.initial,
+          values.other, values.description).subscribe(() => {}, () => {});
       }
     });
   }

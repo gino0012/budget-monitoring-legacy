@@ -45,9 +45,11 @@ describe('AccountTabComponent', () => {
 
   describe('openDialog', () => {
     const mockValues = {
+      name: 'account name',
       maintaining: 100,
       initial: 200,
-      other: 300
+      other: 300,
+      description: 'description'
     };
     let mockMdDialogRef;
 
@@ -64,9 +66,11 @@ describe('AccountTabComponent', () => {
       expect(mockMdDialog.open).toHaveBeenCalled();
       expect(mockMdDialogRef.afterClosed).toHaveBeenCalled();
       expect(mockAccountService.addAccount).toHaveBeenCalledWith(
+        mockValues.name,
         mockValues.maintaining,
         mockValues.initial,
-        mockValues.other
+        mockValues.other,
+        mockValues.description
       );
     });
 
