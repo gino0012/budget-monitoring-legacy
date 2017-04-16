@@ -11,8 +11,10 @@ import { Observable } from 'rxjs/Observable';
 import { MockUserService } from '../shared/test/mocks/mock-user-service';
 import { LocationService } from '../shared/service/location.service';
 import { MockLocationService } from '../shared/test/mocks/mock-location-service';
+import { Constants } from '../shared/constants/constants';
 
 describe('LoginComponent', () => {
+  const constants = new Constants();
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let mockActivatedRoute, mockUserService, mockRouter, mockLocationService;
@@ -20,7 +22,7 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      providers: [GoogleApiService,
+      providers: [GoogleApiService, Constants,
         { provide: UserService, useClass: MockUserService },
         { provide: ActivatedRoute, useClass: MockActivatedRoute },
         { provide: Router, useClass: MockRouter },
@@ -72,9 +74,6 @@ describe('LoginComponent', () => {
 
     component.ngOnInit();
 
-    expect(mockLocationService.navigate).toHaveBeenCalledWith('https://accounts.google.com/o/oauth2/v2/auth' +
-      '?scope=https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.readonly' +
-      '&access_type=offline&include_granted_scopes=false&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flogin' +
-      '&response_type=code&client_id=861770303263-nhmpmupmg7je2d3u76714ij8dun527up.apps.googleusercontent.com');
+    expect(mockLocationService.navigate).toHaveBeenCalledWith(constants.AUTH_URL);
   });
 });

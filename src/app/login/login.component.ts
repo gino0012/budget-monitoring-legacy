@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../shared/service/location.service';
+import { Constants } from '../shared/constants/constants';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(private location: LocationService,
               private route: ActivatedRoute,
               private router: Router,
-              private userService: UserService) {  }
+              private userService: UserService,
+              private constants: Constants) {  }
 
   ngOnInit() {
     const isAuthenticated = this.route.snapshot.data['isAuthenticated'];
@@ -24,10 +26,7 @@ export class LoginComponent implements OnInit {
       } else if (isAuthenticated) {
         this.router.navigate(['/home']);
       } else {
-        this.location.navigate('https://accounts.google.com/o/oauth2/v2/auth' +
-          '?scope=https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.readonly' +
-          '&access_type=offline&include_granted_scopes=false&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flogin' +
-          '&response_type=code&client_id=861770303263-nhmpmupmg7je2d3u76714ij8dun527up.apps.googleusercontent.com');
+        this.location.navigate(this.constants.AUTH_URL);
       }
     });
   }
