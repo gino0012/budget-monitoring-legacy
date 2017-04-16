@@ -103,8 +103,8 @@ describe('UserService', () => {
 
       expect(mockGoogleService.isAuthenticated).not.toHaveBeenCalled();
       expect(mockUserDataService.getAccessToken).toHaveBeenCalled();
-      expect(authSuccessSpy).not.toHaveBeenCalled();
-      expect(authFailedSpy).toHaveBeenCalledWith(false);
+      expect(authSuccessSpy).toHaveBeenCalledWith(false);
+      expect(authFailedSpy).not.toHaveBeenCalledWith();
     });
   });
 });

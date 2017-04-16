@@ -9,6 +9,6 @@ export class AuthenticationResolver implements Resolve<Observable<any>> {
   constructor(private userService: UserService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this.userService.isLogin().map(res => true).catch(() => Observable.of(false));
+    return this.userService.isLogin();
   }
 }

@@ -15,7 +15,7 @@ module.exports = function (config) {
         code: req.query.code,
         client_id: '861770303263-nhmpmupmg7je2d3u76714ij8dun527up.apps.googleusercontent.com',
         client_secret: 'fZtFjpzDmsm0ZWTxYOVnj94Z',
-        redirect_uri: 'postmessage',
+        redirect_uri: 'http://localhost:4200/login',
         grant_type: 'authorization_code'
       },
       headers: {

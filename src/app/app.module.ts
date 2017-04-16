@@ -26,6 +26,7 @@ import { AddNewAccountComponent } from './shared/modals/add-new-account/add-new-
 import { AccountTabComponent } from './account-tab/account-tab.component';
 import { AccountService } from './account-tab/account.service';
 import { AlertService } from './shared/services/alert.service';
+import { LocationService } from './shared/service/location.service';
 
 const appRoutes: Routes = [
   {
@@ -78,7 +79,8 @@ const appRoutes: Routes = [
     GoogleApiService,
     GoogleService,
     UserService,
-    UserDataService
+    UserDataService,
+    LocationService
   ],
   entryComponents: [
     AddNewBudgetComponent,

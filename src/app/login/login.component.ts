@@ -1,7 +1,8 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '../shared/services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LocationService } from '../shared/service/location.service';
 
 @Component({
   selector: 'app-login',
@@ -10,17 +11,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private ngZone: NgZone,
+  constructor(private location: LocationService,
               private route: ActivatedRoute,
               private router: Router,
               private userService: UserService) {  }
 
   ngOnInit() {
-    window['onSignIn'] = (user) => this.ngZone.run(() => this.userService.login(user));
     const isAuthenticated = this.route.snapshot.data['isAuthenticated'];
-    if (isAuthenticated) {
-      this.router.navigate(['/home']);
-    }
+    this.route.queryParams.subscribe((params) => {
+      if (params['code'] && !isAuthenticated) {
+        this.userService.login(params);
+      } else if (isAuthenticated) {
+        this.router.navigate(['/home']);
+      } else {
+        this.location.navigate('https://accounts.google.com/o/oauth2/v2/auth' +
+          '?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.metadata.readonly' +
+          '&access_type=offline&include_granted_scopes=false&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flogin' +
+          '&response_type=code&client_id=861770303263-nhmpmupmg7je2d3u76714ij8dun527up.apps.googleusercontent.com');
+      }
+    });
   }
 
 }

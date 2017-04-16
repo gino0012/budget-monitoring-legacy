@@ -26,8 +26,9 @@ export class UserService implements UserInterface {
   isLogin(): Observable<boolean> {
     const accessToken = this.userData.getAccessToken();
     if (accessToken !== null && accessToken !== undefined) {
-        return this.googleService.isAuthenticated(accessToken).map(res => true);
+        return this.googleService.isAuthenticated(accessToken).map(res => true)
+          .catch(() => Observable.of(false));
       }
-    return Observable.throw(false);
+    return Observable.of(false);
   }
 }
