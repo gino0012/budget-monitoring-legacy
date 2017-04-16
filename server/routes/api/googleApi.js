@@ -6,6 +6,7 @@ module.exports = function (config) {
 
   googleApi.use('/drive', require('./google/googleDriveApi')(config));
   googleApi.use('/sheets', require('./google/googleSheetsApi')(config));
+  googleApi.use('/plus', require('./google/googlePlusApi')(config));
 
   googleApi.get('/getAccessToken', (req, res) => {
     var options = {

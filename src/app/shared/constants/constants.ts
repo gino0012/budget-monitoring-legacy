@@ -1,7 +1,9 @@
 export class Constants {
   CONFIG = {
     AUTH_BASE_URL: 'https://accounts.google.com/o/oauth2/v2/auth',
-    SCOPE: 'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.readonly',
+    SCOPE: 'https://www.googleapis.com/auth/spreadsheets'
+      + ' ' + 'https://www.googleapis.com/auth/drive.readonly'
+      + ' ' + 'https://www.googleapis.com/auth/plus.me',
     ACCESS_TYPE: 'offline',
     INCLUDE_GRANTED_SCOPES: 'false',
     REDIRECT_URI: 'http://localhost:4200/login',
