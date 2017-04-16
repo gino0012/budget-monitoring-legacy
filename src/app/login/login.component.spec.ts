@@ -73,7 +73,7 @@ describe('LoginComponent', () => {
     component.ngOnInit();
 
     expect(mockLocationService.navigate).toHaveBeenCalledWith('https://accounts.google.com/o/oauth2/v2/auth' +
-      '?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.metadata.readonly' +
+      '?scope=https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.readonly' +
       '&access_type=offline&include_granted_scopes=false&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flogin' +
       '&response_type=code&client_id=861770303263-nhmpmupmg7je2d3u76714ij8dun527up.apps.googleusercontent.com');
   });
