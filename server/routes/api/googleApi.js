@@ -10,13 +10,13 @@ module.exports = function (config) {
   googleApi.get('/getAccessToken', (req, res) => {
     var options = {
       method: 'POST',
-      uri: 'https://accounts.google.com/o/oauth2/token',
+      uri: config.AUTH_TOKEN_URL,
       form: {
         code: req.query.code,
-        client_id: '861770303263-nhmpmupmg7je2d3u76714ij8dun527up.apps.googleusercontent.com',
-        client_secret: 'fZtFjpzDmsm0ZWTxYOVnj94Z',
-        redirect_uri: 'http://localhost:4200/login',
-        grant_type: 'authorization_code'
+        client_id: config.CLIENT_ID,
+        client_secret: config.CLIENT_SECRET,
+        redirect_uri: config.REDIRECT_URL,
+        grant_type: config.GRANT_TYPE
       },
       headers: {
         'content-type': 'application/x-www-form-urlencoded'
