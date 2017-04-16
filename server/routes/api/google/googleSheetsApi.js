@@ -77,7 +77,7 @@ module.exports = function (config) {
   });
 
   function handleErrorResponse(res, err) {
-    if (err.code === 'ETIMEDOUT') {
+    if (err.code === 'ETIMEDOUT' || !err.errors) {
       return res.status(500).json(err);
     }
     return res.status(err.code).json(err.errors[0]);
