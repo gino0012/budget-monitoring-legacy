@@ -3,8 +3,8 @@ import { TestBed, inject } from '@angular/core/testing';
 import { MockBackend } from '@angular/http/testing';
 import {
   Http,
-  BaseRequestOptions
-  RequestMethod
+  BaseRequestOptions,
+  RequestMethod,
   Response,
   ResponseOptions,
   XHRBackend

@@ -8,7 +8,7 @@ module.exports = function (config) {
   googleApi.use('/sheets', require('./google/googleSheetsApi')(config));
   googleApi.use('/plus', require('./google/googlePlusApi')(config));
 
-  googleApi.get('/getAccessToken', (req, res) => {
+  googleApi.get('/getAccessToken', function (req, res) {
     var options = {
       method: 'POST',
       uri: config.AUTH_TOKEN_URL,
@@ -29,7 +29,7 @@ module.exports = function (config) {
     .catch(_handleErrorResponse(res));
   });
 
-  googleApi.get('/isAuthenticated', (req, res) => {
+  googleApi.get('/isAuthenticated', function (req, res) {
     var options = {
       method: 'GET',
       uri: 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=' + req.query.access_token,
@@ -41,13 +41,13 @@ module.exports = function (config) {
   });
 
   function _handleResponse(res) {
-    return (response) => {
+    return function (response) {
       res.json(response);
     }
   }
 
   function _handleErrorResponse(res) {
-    return (response) => {
+    return function (response) {
       res.status(500).json(response.error);
     }
   }
