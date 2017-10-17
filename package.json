@@ -63,5 +63,8 @@
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0"
+  },
+  "engines": {
+    "node": "8.3.0"
   }
 }
