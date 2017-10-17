@@ -6,7 +6,7 @@ export class Constants {
       + ' ' + 'https://www.googleapis.com/auth/plus.me',
     ACCESS_TYPE: 'offline',
     INCLUDE_GRANTED_SCOPES: 'false',
-    REDIRECT_URI: 'http://localhost:4200/login',
+    REDIRECT_URI: 'https://budget-monitoring.herokuapp.com/login',
     RESPONSE_TYPE: 'code',
     CLIENT_ID: '861770303263-nhmpmupmg7je2d3u76714ij8dun527up.apps.googleusercontent.com'
   };

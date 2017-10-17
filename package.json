@@ -18,20 +18,24 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cli": "^1.4.7",
-    "@angular/compiler-cli": "^4.4.5",
     "@angular/animations": "^4.4.5",
-    "@angular/cdk": "^2.0.0-beta.10",
+    "@angular/cdk": "2.0.0-beta.10",
+    "@angular/cli": "^1.4.7",
     "@angular/common": "^4.4.5",
     "@angular/compiler": "^4.4.5",
+    "@angular/compiler-cli": "^4.4.5",
     "@angular/core": "^4.4.5",
     "@angular/forms": "^4.4.5",
     "@angular/http": "^4.4.5",
-    "@angular/material": "^2.0.0-beta.10",
+    "@angular/material": "2.0.0-beta.10",
     "@angular/platform-browser": "^4.4.5",
     "@angular/platform-browser-dynamic": "^4.4.5",
     "@angular/platform-server": "^4.4.5",
     "@angular/router": "^4.4.5",
+    "@types/hammerjs": "^2.0.34",
+    "@types/jasmine": "2.5.38",
+    "@types/lodash": "^4.14.51",
+    "@types/node": "^6.0.42",
     "body-parser": "^1.16.1",
     "core-js": "^2.4.1",
     "express": "^4.14.1",
@@ -43,14 +47,10 @@
     "request-promise": "^4.1.1",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
-    "typescript": "^2.3.4",
+    "typescript": "2.3.4",
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@types/hammerjs": "^2.0.34",
-    "@types/jasmine": "2.5.38",
-    "@types/lodash": "^4.14.51",
-    "@types/node": "^6.0.42",
     "codelyzer": "~2.0.0-beta.1",
     "concurrently": "^3.2.0",
     "jasmine-core": "2.5.2",
@@ -63,5 +63,8 @@
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0"
+  },
+  "engines": {
+    "node": "8.3.0"
   }
 }
