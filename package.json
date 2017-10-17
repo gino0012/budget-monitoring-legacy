@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "ng build && node app.js",
+    "start": "ng build --prod && node app.js",
     "test": "ng test --watch false",
     "testw": "ng test",
     "build": "ng lint && ng build && npm test",
@@ -17,11 +17,12 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "^1.4.7",
+    "@angular/compiler-cli": "^4.4.5",
     "@angular/animations": "^4.4.5",
     "@angular/cdk": "^2.0.0-beta.10",
     "@angular/common": "^4.4.5",
     "@angular/compiler": "^4.4.5",
-    "@angular/compiler-cli": "^4.4.5",
     "@angular/core": "^4.4.5",
     "@angular/forms": "^4.4.5",
     "@angular/http": "^4.4.5",
@@ -45,7 +46,6 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@angular/cli": "^1.4.7",
     "@types/hammerjs": "^2.0.34",
     "@types/jasmine": "2.5.38",
     "@types/lodash": "^4.14.51",
