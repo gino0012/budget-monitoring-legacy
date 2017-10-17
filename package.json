@@ -4,8 +4,9 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
+    "postinstall": "ng build --prod",
     "ng": "ng",
-    "start": "ng build --prod && node app.js",
+    "start": "node app.js",
     "test": "ng test --watch false",
     "testw": "ng test",
     "build": "ng lint && ng build && npm test",
